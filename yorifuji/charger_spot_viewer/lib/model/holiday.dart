@@ -48,31 +48,31 @@ class Holiday {
 }
 
 class HolidayJP {
-  final List<Holiday> _holidays = [];
-  HolidayJP() {
-    _holidays.add(Holiday(2022, 1, 1));
-    _holidays.add(Holiday(2022, 1, 10));
-    _holidays.add(Holiday(2022, 2, 11));
-    _holidays.add(Holiday(2022, 2, 23));
-    _holidays.add(Holiday(2022, 3, 21));
-    _holidays.add(Holiday(2022, 4, 29));
-    _holidays.add(Holiday(2022, 5, 3));
-    _holidays.add(Holiday(2022, 5, 4));
-    _holidays.add(Holiday(2022, 5, 5));
-    _holidays.add(Holiday(2022, 7, 18));
-    _holidays.add(Holiday(2022, 8, 11));
-    _holidays.add(Holiday(2022, 9, 19));
-    _holidays.add(Holiday(2022, 9, 23));
-    _holidays.add(Holiday(2022, 10, 10));
-    _holidays.add(Holiday(2022, 11, 3));
-    _holidays.add(Holiday(2022, 11, 23));
-  }
+  static final List<Holiday> _holidays = [
+    Holiday(2022, 1, 1),
+    Holiday(2022, 1, 10),
+    Holiday(2022, 2, 11),
+    Holiday(2022, 2, 23),
+    Holiday(2022, 3, 21),
+    Holiday(2022, 4, 29),
+    Holiday(2022, 5, 3),
+    Holiday(2022, 5, 4),
+    Holiday(2022, 5, 5),
+    Holiday(2022, 7, 18),
+    Holiday(2022, 8, 11),
+    Holiday(2022, 9, 19),
+    Holiday(2022, 9, 23),
+    Holiday(2022, 10, 10),
+    Holiday(2022, 11, 3),
+    Holiday(2022, 11, 23)
+  ];
 
-  bool isHoliday({required int year, required int month, required int day}) {
+  static bool isHoliday(
+      {required int year, required int month, required int day}) {
     return _holidays.contains(Holiday(year, month, day));
   }
 
-  bool isHolidayToday({now}) {
+  static bool isHolidayToday({now}) {
     now ??= DateTime.now();
     return _holidays.contains(Holiday(now.year, now.month, now.day));
   }
