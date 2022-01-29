@@ -1,38 +1,38 @@
-class ChargerSpots {
+class ChargerSpot {
   String? name;
   double? latitude;
   double? longitude;
   String? serviceTimeNote;
-  List<ChargerSpotServiceTimes>? chargerSpotServiceTimes;
-  List<ChargerDevices>? chargerDevices;
+  List<ChargerSpotServiceTime>? chargerSpotServiceTimes;
+  List<ChargerDevice>? chargerDevices;
 
-  ChargerSpots.fromJson(Map<String, dynamic> json) {
+  ChargerSpot.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     latitude = json['latitude'];
     longitude = json['longitude'];
     serviceTimeNote = json['service_time_note'];
     if (json['charger_spot_service_times'] != null) {
-      chargerSpotServiceTimes = <ChargerSpotServiceTimes>[];
+      chargerSpotServiceTimes = <ChargerSpotServiceTime>[];
       json['charger_spot_service_times'].forEach((v) {
-        chargerSpotServiceTimes!.add(ChargerSpotServiceTimes.fromJson(v));
+        chargerSpotServiceTimes!.add(ChargerSpotServiceTime.fromJson(v));
       });
     }
     if (json['charger_devices'] != null) {
-      chargerDevices = <ChargerDevices>[];
+      chargerDevices = <ChargerDevice>[];
       json['charger_devices'].forEach((v) {
-        chargerDevices!.add(ChargerDevices.fromJson(v));
+        chargerDevices!.add(ChargerDevice.fromJson(v));
       });
     }
   }
 }
 
-class ChargerSpotServiceTimes {
+class ChargerSpotServiceTime {
   String? startTime;
   String? endTime;
   String? businessDay;
   String? day;
 
-  ChargerSpotServiceTimes.fromJson(Map<String, dynamic> json) {
+  ChargerSpotServiceTime.fromJson(Map<String, dynamic> json) {
     startTime = json['start_time'];
     endTime = json['end_time'];
     businessDay = json['business_day'];
@@ -40,7 +40,7 @@ class ChargerSpotServiceTimes {
   }
 }
 
-class ChargerDevices {
+class ChargerDevice {
   String? name;
   String? makerCode;
   String? productCode;
@@ -54,7 +54,7 @@ class ChargerDevices {
   String? displayStatus;
   String? power;
 
-  ChargerDevices.fromJson(Map<String, dynamic> json) {
+  ChargerDevice.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     makerCode = json['maker_code'];
     productCode = json['product_code'];
