@@ -45,10 +45,10 @@ class ChargerDevice {
   String? makerCode;
   String? productCode;
   String? serialNumber;
-  Null? serviceStartTime;
-  Null? serviceEndTime;
-  Null? allowCurrent;
-  Null? maxChargeTime;
+  String? serviceStartTime;
+  String? serviceEndTime;
+  String? allowCurrent;
+  String? maxChargeTime;
   double? latitude;
   double? longitude;
   String? displayStatus;
