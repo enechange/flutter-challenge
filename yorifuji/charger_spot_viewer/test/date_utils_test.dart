@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:charger_spot_viewer/model/date_utils.dart';
 
 void main() {
-  test('Test weekdayString', () {
+  test('Test DateTime.weekdayString', () {
     expect(DateTime.utc(2022, 1, 23).weekdayString(), 'Sunday');
     expect(DateTime.utc(2022, 1, 24).weekdayString(), 'Monday');
     expect(DateTime.utc(2022, 1, 25).weekdayString(), 'Tuesday');
@@ -21,6 +21,7 @@ void main() {
     expect(getWeekdayStringJP('Thursday'), '木曜日');
     expect(getWeekdayStringJP('Friday'), '金曜日');
     expect(getWeekdayStringJP('Saturday'), '土曜日');
+    expect(getWeekdayStringJP('Holiday'), '祝日');
 
     expect(getWeekdayStringJP('FooBarday'), '');
   });
@@ -33,6 +34,7 @@ void main() {
     expect(getShortWeekdayStringJP('Thursday'), '木');
     expect(getShortWeekdayStringJP('Friday'), '金');
     expect(getShortWeekdayStringJP('Saturday'), '土');
+    expect(getShortWeekdayStringJP('Holiday'), '祝');
 
     expect(getShortWeekdayStringJP('FooBarday'), '');
   });

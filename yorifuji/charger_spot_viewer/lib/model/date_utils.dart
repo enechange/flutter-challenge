@@ -38,7 +38,8 @@ String getWeekdayStringJP(String weekdayStringEN) {
     'Wednesday': '水曜日',
     'Thursday': '木曜日',
     'Friday': '金曜日',
-    'Saturday': '土曜日'
+    'Saturday': '土曜日',
+    'Holiday': '祝日'
   };
 
   if (map.containsKey(weekdayStringEN)) {
@@ -50,7 +51,7 @@ String getWeekdayStringJP(String weekdayStringEN) {
 /*
   String getWeekdayStringJP(String weekdayStringEN)
     英語の曜日から日本語（短縮版）の曜日の文字列を取得
-    例：'Sunday' -> `日`
+    例：'Sunday' -> '日'
 */
 String getShortWeekdayStringJP(String weekdayStringEN) {
   final week = getWeekdayStringJP(weekdayStringEN);
@@ -58,12 +59,4 @@ String getShortWeekdayStringJP(String weekdayStringEN) {
     return week.substring(0, 1);
   }
   return '';
-}
-
-/*
-  String getHolidayStringJP()
-    祝日の日本語文字列
-*/
-String getHolidayStringJP() {
-  return '祝日';
 }
