@@ -74,7 +74,7 @@ class HolidayJP {
     return _holidays.contains(Holiday(year, month, day));
   }
 
-  static bool isHolidayToday({now}) {
+  static bool isHolidayToday([DateTime? now]) {
     now ??= DateTime.now();
     return _holidays.contains(Holiday(now.year, now.month, now.day));
   }
