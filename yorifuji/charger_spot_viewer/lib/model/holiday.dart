@@ -26,7 +26,9 @@ class Holiday {
   final int year;
   final int month;
   final int day;
+
   Holiday(this.year, this.month, this.day);
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {

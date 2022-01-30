@@ -12,4 +12,28 @@ void main() {
     expect(DateTime.utc(2022, 1, 28).weekdayString(), 'Friday');
     expect(DateTime.utc(2022, 1, 29).weekdayString(), 'Saturday');
   });
+
+  test('Test getWeekdayStringJP', () {
+    expect(getWeekdayStringJP('Sunday'), '日曜日');
+    expect(getWeekdayStringJP('Monday'), '月曜日');
+    expect(getWeekdayStringJP('Tuesday'), '火曜日');
+    expect(getWeekdayStringJP('Wednesday'), '水曜日');
+    expect(getWeekdayStringJP('Thursday'), '木曜日');
+    expect(getWeekdayStringJP('Friday'), '金曜日');
+    expect(getWeekdayStringJP('Saturday'), '土曜日');
+
+    expect(getWeekdayStringJP('FooBarday'), '');
+  });
+
+  test('Test getShortWeekdayStringJP', () {
+    expect(getShortWeekdayStringJP('Sunday'), '日');
+    expect(getShortWeekdayStringJP('Monday'), '月');
+    expect(getShortWeekdayStringJP('Tuesday'), '火');
+    expect(getShortWeekdayStringJP('Wednesday'), '水');
+    expect(getShortWeekdayStringJP('Thursday'), '木');
+    expect(getShortWeekdayStringJP('Friday'), '金');
+    expect(getShortWeekdayStringJP('Saturday'), '土');
+
+    expect(getShortWeekdayStringJP('FooBarday'), '');
+  });
 }
