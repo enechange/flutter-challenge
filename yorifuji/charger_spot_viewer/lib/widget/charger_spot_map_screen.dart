@@ -38,8 +38,8 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
           _createMarker();
         },
         markers: _markers,
-        myLocationEnabled: false,
-        myLocationButtonEnabled: false,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
       ),
     );
   }
