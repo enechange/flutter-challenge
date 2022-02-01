@@ -70,7 +70,7 @@ class _ChargerSpotListScreen extends State<ChargerSpotListScreen> {
               );
             },
             child: Container(
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
