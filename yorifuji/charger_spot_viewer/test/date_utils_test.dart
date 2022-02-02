@@ -1,5 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
-
+import 'package:flutter_test/flutter_test.dart' show expect, test;
 import 'package:charger_spot_viewer/model/date_utils.dart';
 
 void main() {
