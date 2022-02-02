@@ -93,6 +93,7 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
                   zoom: defaultZoomLevel);
               controller
                   .animateCamera(CameraUpdate.newCameraPosition(position));
+              controller.showMarkerInfoWindow(MarkerId(_chargerSpot.name!));
             }))
         .toList();
   }
