@@ -1,7 +1,5 @@
 import 'dart:convert';
-
-import 'package:flutter_test/flutter_test.dart';
-
+import 'package:flutter_test/flutter_test.dart' show expect, group, test;
 import 'package:charger_spot_viewer/model/charger_spot_model.dart';
 import 'package:charger_spot_viewer/model/charger_spot_model_utils.dart';
 

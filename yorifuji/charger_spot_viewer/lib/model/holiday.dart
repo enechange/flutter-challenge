@@ -45,8 +45,7 @@ class Holiday {
   }
 
   @override
-  int get hashCode =>
-      (year.toString() + month.toString() + day.toString()).hashCode;
+  int get hashCode => (year * 10000 + month * 100 + day).toString().hashCode;
 }
 
 class HolidayJP {
@@ -69,8 +68,7 @@ class HolidayJP {
     Holiday(2022, 11, 23)
   ];
 
-  static bool isHoliday(
-      {required int year, required int month, required int day}) {
+  static bool isHoliday(int year, int month, int day) {
     return _holidays.contains(Holiday(year, month, day));
   }
 
