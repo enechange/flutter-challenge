@@ -5,7 +5,7 @@ import 'package:charger_spot_viewer/model/charger_spot_model.dart';
 import 'package:charger_spot_viewer/widget/charger_spot_card_widget.dart';
 
 void main() {
-  testWidgets('Charget Spot Card Widget Test', (WidgetTester tester) async {
+  testWidgets('Test Charget Spot Card Widget.', (WidgetTester tester) async {
     // カードWidgetの作成
     ChargerSpot chargerSpot =
         ChargerSpot.fromJson(jsonDecode(testChargserSpot));
