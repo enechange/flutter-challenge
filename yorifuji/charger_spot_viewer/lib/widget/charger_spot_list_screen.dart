@@ -56,7 +56,8 @@ class _ChargerSpotListScreen extends State<ChargerSpotListScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ChargerSpotMapScreen(
-                            chargerSpot: chargerSpots[index])),
+                            chargerSpot: chargerSpots[index],
+                            chargerSpots: chargerSpots)),
                   )
                 });
       },
