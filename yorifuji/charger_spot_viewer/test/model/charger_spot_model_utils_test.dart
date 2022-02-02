@@ -5,7 +5,7 @@ import 'package:charger_spot_viewer/model/charger_spot_model_utils.dart';
 
 void main() {
   group('Test getTodaysBussinessHour()', () {
-    var list = jsonDecode(sampleData1)['charger_spots'] as List;
+    final List list = jsonDecode(sampleData1)['charger_spots'] as List;
     List<ChargerSpot> chargerSpots =
         list.map((model) => ChargerSpot.fromJson(model)).toList();
 
@@ -29,31 +29,31 @@ void main() {
   });
   group('Test getClosedDay()', () {
     test('Case: 日曜日', () {
-      var list = jsonDecode(sampleData2)['charger_spots'] as List;
+      final List list = jsonDecode(sampleData2)['charger_spots'] as List;
       List<ChargerSpot> chargerSpots =
           list.map((model) => ChargerSpot.fromJson(model)).toList();
       expect(getClosedDay(chargerSpot: chargerSpots[0]), '日曜日');
     });
     test('Case: 土日', () {
-      var list = jsonDecode(sampleData3)['charger_spots'] as List;
+      final List list = jsonDecode(sampleData3)['charger_spots'] as List;
       List<ChargerSpot> chargerSpots =
           list.map((model) => ChargerSpot.fromJson(model)).toList();
       expect(getClosedDay(chargerSpot: chargerSpots[0]), '土日');
     });
     test('Case: 土日祝', () {
-      var list = jsonDecode(sampleData4)['charger_spots'] as List;
+      final List list = jsonDecode(sampleData4)['charger_spots'] as List;
       List<ChargerSpot> chargerSpots =
           list.map((model) => ChargerSpot.fromJson(model)).toList();
       expect(getClosedDay(chargerSpot: chargerSpots[0]), '土日祝');
     });
     test('Case: なし', () {
-      var list = jsonDecode(sampleData5)['charger_spots'] as List;
+      final List list = jsonDecode(sampleData5)['charger_spots'] as List;
       List<ChargerSpot> chargerSpots =
           list.map((model) => ChargerSpot.fromJson(model)).toList();
       expect(getClosedDay(chargerSpot: chargerSpots[0]), 'なし');
     });
     test('Case:  - ', () {
-      var list = jsonDecode(sampleData6)['charger_spots'] as List;
+      final List list = jsonDecode(sampleData6)['charger_spots'] as List;
       List<ChargerSpot> chargerSpots =
           list.map((model) => ChargerSpot.fromJson(model)).toList();
       expect(getClosedDay(chargerSpot: chargerSpots[0]), ' - ');

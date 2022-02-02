@@ -11,7 +11,7 @@ Future<List<ChargerSpot>> fetchChargerSpotData() async {
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response, then parse the JSON.
-    var list = jsonDecode(response.body)['charger_spots'] as List;
+    final List list = jsonDecode(response.body)['charger_spots'] as List;
     List<ChargerSpot> chargerSpots =
         list.map((model) => ChargerSpot.fromJson(model)).toList();
     if (foundation.kDebugMode) {

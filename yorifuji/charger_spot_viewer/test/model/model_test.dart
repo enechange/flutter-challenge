@@ -43,10 +43,10 @@ void main() {
   group('Test ChargerSpot Class', () {
     test('JSONのデコード', () {
       // sampleDataをJSONに変換
-      var chargerSpotsJson = jsonDecode(sampleData);
+      final chargerSpotsJson = jsonDecode(sampleData);
 
       // 'charger_spots' を List　に変換
-      var list = chargerSpotsJson['charger_spots'] as List;
+      final List list = chargerSpotsJson['charger_spots'] as List;
 
       // ChargerSpot に変換
       List<ChargerSpot> chargerSpots =
