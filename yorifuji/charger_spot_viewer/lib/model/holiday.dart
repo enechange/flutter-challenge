@@ -27,7 +27,7 @@ class Holiday {
   final int month;
   final int day;
 
-  Holiday(this.year, this.month, this.day);
+  const Holiday(this.year, this.month, this.day);
 
   @override
   bool operator ==(Object other) {
@@ -50,22 +50,22 @@ class Holiday {
 
 class HolidayJP {
   static final List<Holiday> _holidays = [
-    Holiday(2022, 1, 1),
-    Holiday(2022, 1, 10),
-    Holiday(2022, 2, 11),
-    Holiday(2022, 2, 23),
-    Holiday(2022, 3, 21),
-    Holiday(2022, 4, 29),
-    Holiday(2022, 5, 3),
-    Holiday(2022, 5, 4),
-    Holiday(2022, 5, 5),
-    Holiday(2022, 7, 18),
-    Holiday(2022, 8, 11),
-    Holiday(2022, 9, 19),
-    Holiday(2022, 9, 23),
-    Holiday(2022, 10, 10),
-    Holiday(2022, 11, 3),
-    Holiday(2022, 11, 23)
+    const Holiday(2022, 1, 1),
+    const Holiday(2022, 1, 10),
+    const Holiday(2022, 2, 11),
+    const Holiday(2022, 2, 23),
+    const Holiday(2022, 3, 21),
+    const Holiday(2022, 4, 29),
+    const Holiday(2022, 5, 3),
+    const Holiday(2022, 5, 4),
+    const Holiday(2022, 5, 5),
+    const Holiday(2022, 7, 18),
+    const Holiday(2022, 8, 11),
+    const Holiday(2022, 9, 19),
+    const Holiday(2022, 9, 23),
+    const Holiday(2022, 10, 10),
+    const Holiday(2022, 11, 3),
+    const Holiday(2022, 11, 23)
   ];
 
   static bool isHoliday(int year, int month, int day) {
