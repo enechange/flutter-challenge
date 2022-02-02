@@ -9,7 +9,7 @@ void main() {
     // カードWidgetの作成
     ChargerSpot chargerSpot =
         ChargerSpot.fromJson(jsonDecode(testChargserSpot));
-    final Widget cardWidget = buildChargerSpotCard(chargerSpot: chargerSpot);
+    final Widget cardWidget = ChargerSpotCard(chargerSpot: chargerSpot);
     await tester.pumpWidget(MaterialApp(home: cardWidget));
 
     // カードの表示内容のテスト

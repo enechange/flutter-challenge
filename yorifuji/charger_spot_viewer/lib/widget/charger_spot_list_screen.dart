@@ -33,7 +33,7 @@ class _ChargerSpotListScreen extends State<ChargerSpotListScreen> {
             future: futureChargerSpots,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<ChargerSpot> chargerSpots = snapshot.data!;
+                final List<ChargerSpot> chargerSpots = snapshot.data!;
                 return _buildChargerSpotCardList(chargerSpots);
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
@@ -49,7 +49,7 @@ class _ChargerSpotListScreen extends State<ChargerSpotListScreen> {
     return ListView.builder(
       itemCount: chargerSpots.length,
       itemBuilder: (context, index) {
-        return buildChargerSpotCard(
+        return ChargerSpotCard(
             chargerSpot: chargerSpots[index],
             onTapFunc: () => {
                   Navigator.push(

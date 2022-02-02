@@ -81,7 +81,7 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
 
   List<Widget> _createFloatingCards() {
     return widget.chargerSpots
-        .map((_chargerSpot) => buildChargerSpotCard(
+        .map((_chargerSpot) => ChargerSpotCard(
             chargerSpot: _chargerSpot,
             onTapFunc: () async {
               final GoogleMapController controller = await _controller.future;
