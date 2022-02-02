@@ -13,7 +13,7 @@ class ChargerSpotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        margin: const EdgeInsets.all(20),
+        margin: const EdgeInsets.only(left: 15, top: 15, right: 15),
         elevation: 10,
         child: InkWell(
             onTap: onTapFunc,
