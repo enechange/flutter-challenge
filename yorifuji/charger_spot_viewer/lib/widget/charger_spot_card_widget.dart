@@ -6,7 +6,7 @@ Widget buildChargerSpotCard(
     {required ChargerSpot chargerSpot, void Function()? onTapFunc}) {
   return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      margin: const EdgeInsets.all(20),
       elevation: 10,
       child: InkWell(
           onTap: onTapFunc,
