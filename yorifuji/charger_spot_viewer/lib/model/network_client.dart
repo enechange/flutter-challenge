@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:charger_spot_viewer/model/charger_spot_model.dart';
 
-import 'charger_spot_model.dart';
+const apiURL = 'https://stg.evene.jp/api/charger_spots';
 
 Future<List<ChargerSpot>> fetchChargerSpotData() async {
-  final response =
-      await http.get(Uri.parse('https://stg.evene.jp/api/charger_spots'));
+  final response = await http.get(Uri.parse(apiURL));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response, then parse the JSON.
