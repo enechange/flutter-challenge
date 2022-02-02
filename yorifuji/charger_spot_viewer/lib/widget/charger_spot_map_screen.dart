@@ -59,10 +59,13 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
       _markers = widget.chargerSpots
           .map((_chargerSpot) => Marker(
               onTap: () async {
-                // final GoogleMapController controller = await _controller.future;
-                // final visibleRegion = await controller.getVisibleRegion();
-                // print(visibleRegion.northeast);
-                // print(visibleRegion.southwest);
+                final GoogleMapController controller = await _controller.future;
+                final position = CameraPosition(
+                    target:
+                        LatLng(_chargerSpot.latitude!, _chargerSpot.longitude!),
+                    zoom: defaultZoomLevel);
+                controller
+                    .animateCamera(CameraUpdate.newCameraPosition(position));
               },
               markerId: MarkerId(_chargerSpot.name!),
               icon: BitmapDescriptor.defaultMarkerWithHue(
