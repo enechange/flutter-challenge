@@ -46,9 +46,11 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
           myLocationButtonEnabled: false, // カードと重なってしまうため
         ),
         Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(children: _createFloatingCards()))
+          Container(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(children: _createFloatingCards())))
         ]),
       ]),
     );
@@ -91,6 +93,7 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
                   zoom: defaultZoomLevel);
               controller
                   .animateCamera(CameraUpdate.newCameraPosition(position));
+              controller.showMarkerInfoWindow(MarkerId(_chargerSpot.name!));
             }))
         .toList();
   }
