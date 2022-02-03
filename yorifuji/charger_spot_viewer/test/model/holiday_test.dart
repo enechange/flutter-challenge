@@ -4,12 +4,12 @@ import 'package:charger_spot_viewer/model/holiday.dart';
 void main() {
   group('Test Holiday Class', () {
     test('Test equals operator, same object', () {
-      expect(Holiday(2022, 1, 1) == Holiday(2022, 1, 1), isTrue);
-      expect(Holiday(2022, 1, 31) == Holiday(2022, 1, 31), isTrue);
+      expect(const Holiday(2022, 1, 1) == const Holiday(2022, 1, 1), isTrue);
+      expect(const Holiday(2022, 1, 31) == const Holiday(2022, 1, 31), isTrue);
     });
     test('Test equals operator, different object', () {
-      expect(Holiday(2022, 1, 1) == Holiday(2022, 1, 2), isFalse);
-      expect(Holiday(2022, 1, 11) == Holiday(2022, 11, 1), isFalse);
+      expect(const Holiday(2022, 1, 1) == const Holiday(2022, 1, 2), isFalse);
+      expect(const Holiday(2022, 1, 11) == const Holiday(2022, 11, 1), isFalse);
     });
   });
   group('Test HolidayJP Class', () {
