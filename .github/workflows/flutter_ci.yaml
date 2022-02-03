@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  flutter_analyze:
+  flutter_ci:
 
     runs-on: ubuntu-latest
 
