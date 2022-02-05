@@ -82,19 +82,36 @@ class _ChargerSpotMapScreen extends State<ChargerSpotMapScreen> {
   }
 
   List<Widget> _createFloatingCards() {
-    return widget.chargerSpots
-        .map((_chargerSpot) => ChargerSpotCard(
-            chargerSpot: _chargerSpot,
-            onTapFunc: () async {
-              final GoogleMapController controller = await _controller.future;
-              final position = CameraPosition(
-                  target:
-                      LatLng(_chargerSpot.latitude!, _chargerSpot.longitude!),
-                  zoom: defaultZoomLevel);
-              controller
-                  .animateCamera(CameraUpdate.newCameraPosition(position));
-              controller.showMarkerInfoWindow(MarkerId(_chargerSpot.name!));
-            }))
-        .toList();
+    final List<Widget> sortedCards = [];
+    // 選択したスポットをリストの先頭に追加
+    sortedCards.add(ChargerSpotCard(
+        chargerSpot: widget.chargerSpot,
+        onTapFunc: () async {
+          final GoogleMapController controller = await _controller.future;
+          final position = CameraPosition(
+              target: LatLng(
+                  widget.chargerSpot.latitude!, widget.chargerSpot.longitude!),
+              zoom: defaultZoomLevel);
+          controller.animateCamera(CameraUpdate.newCameraPosition(position));
+          controller.showMarkerInfoWindow(MarkerId(widget.chargerSpot.name!));
+        }));
+
+    // 残りのスポットを追加
+    for (var spot in widget.chargerSpots) {
+      if (spot == widget.chargerSpot) {
+        continue;
+      }
+      sortedCards.add(ChargerSpotCard(
+          chargerSpot: spot,
+          onTapFunc: () async {
+            final GoogleMapController controller = await _controller.future;
+            final position = CameraPosition(
+                target: LatLng(spot.latitude!, spot.longitude!),
+                zoom: defaultZoomLevel);
+            controller.animateCamera(CameraUpdate.newCameraPosition(position));
+            controller.showMarkerInfoWindow(MarkerId(spot.name!));
+          }));
+    }
+    return sortedCards;
   }
 }
