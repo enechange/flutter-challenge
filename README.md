@@ -27,4 +27,4 @@
 
 ## 充電器情報を取得するためのエンドポイントについて
  - [こちら](https://stg.evene.jp/apidocs/charger_spots#/charger_spots)をご覧ください。
- - staging環境では認証トークン（X-EVENE-NATIVE-API-TOKEN）は設定不要ですのでstagingをお使いください。
+ - 認証トークン（X-EVENE-NATIVE-API-TOKEN）は別途お伝えいたします。
