@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  dio: ^4.0.6
   openapi:
     path: ./openapi/client
 
@@ -30,8 +30,4 @@ flutter:
     - images/icon_power.png
     - images/icon_today.png
     - images/icon_watch.png
-    - images/icon_bolt.svg
-    - images/icon_power.svg
-    - images/icon_today.svg
-    - images/icon_watch.svg
     - images/noimage.png
