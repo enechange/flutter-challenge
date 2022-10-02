@@ -19,6 +19,19 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_gen_runner: ^5.0.1
+  build_runner: ^2.2.1
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - images/icon_bolt.png
+    - images/icon_power.png
+    - images/icon_today.png
+    - images/icon_watch.png
+    - images/icon_bolt.svg
+    - images/icon_power.svg
+    - images/icon_today.svg
+    - images/icon_watch.svg
+    - images/noimage.png

@@ -9,6 +9,7 @@ class ChargerSpotsListPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
           child: Column(
             children: [
               ChargerSpotCard(),
