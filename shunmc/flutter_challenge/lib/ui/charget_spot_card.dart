@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
 import 'package:openapi/openapi.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChargerSpotCard extends StatelessWidget {
   const ChargerSpotCard(this.chargerSpot, {super.key});
@@ -59,9 +60,9 @@ class ChargerSpotCard extends StatelessWidget {
                   children: [
                     Text(chargerSpot.name),
                     _buildTable(),
-                    const TextButton(
-                      onPressed: null,
-                      child: Text('地図アプリで経路を見る'),
+                    TextButton(
+                      onPressed: _goToMapApp,
+                      child: const Text('地図アプリで経路を見る'),
                     ),
                   ],
                 ),
@@ -194,6 +195,24 @@ class ChargerSpotCard extends StatelessWidget {
         return '平日';
       default:
         return '';
+    }
+  }
+
+  Future _goToMapApp() async {
+    final url = Uri(
+      scheme: 'https',
+      host: 'www.google.com',
+      path: 'maps/search/',
+      queryParameters: {
+        'api': '1',
+        'query': '${chargerSpot.latitude},${chargerSpot.longitude}',
+      },
+    );
+    if (await canLaunchUrl(url)) {
+      launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
     }
   }
 }
