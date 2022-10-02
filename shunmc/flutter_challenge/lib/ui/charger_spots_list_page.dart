@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/ui/charget_spot_card.dart';
+import 'package:go_router/go_router.dart';
 
 class ChargerSpotsListPage extends StatelessWidget {
   const ChargerSpotsListPage({super.key});
@@ -29,7 +30,15 @@ class ChargerSpotsListPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
               child: Column(
                 children: snapshot.data!
-                    .map((e) => ChargerSpotCard(e, key: ValueKey(e.uuid)))
+                    .map(
+                      (e) => InkWell(
+                        onTap: () => context.go('/map', extra: {
+                          'chargerSpot': e,
+                          'chargerSpots': snapshot.data!,
+                        }),
+                        child: ChargerSpotCard(e, key: ValueKey(e.uuid)),
+                      ),
+                    )
                     .toList(),
               ),
             );
