@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge/charget_spot_card.dart';
+import 'package:flutter_challenge/ui/charget_spot_card.dart';
 import 'package:openapi/openapi.dart';
 
 class ChargerSpotsListPage extends StatelessWidget {
