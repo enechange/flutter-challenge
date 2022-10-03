@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/openapi.dart';
 
 class ChargerSpotsMapPage extends StatelessWidget {
@@ -10,8 +11,13 @@ class ChargerSpotsMapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Text(chargerSpot.name),
+      body: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(
+            chargerSpot.latitude.toDouble(),
+            chargerSpot.longitude.toDouble(),
+          ),
+        ),
       ),
     );
   }
