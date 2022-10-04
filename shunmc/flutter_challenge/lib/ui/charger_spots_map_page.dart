@@ -17,7 +17,21 @@ class ChargerSpotsMapPage extends StatelessWidget {
             chargerSpot.latitude.toDouble(),
             chargerSpot.longitude.toDouble(),
           ),
+          zoom: 16,
         ),
+        markers: chargerSpots
+            .map(
+              (e) => Marker(
+                markerId: MarkerId(e.uuid),
+                position: LatLng(e.latitude.toDouble(), e.longitude.toDouble()),
+                infoWindow: InfoWindow(title: '${e.chargerDevices?.length}'),
+                onTap: () {},
+              ),
+            )
+            .toSet(),
+        mapToolbarEnabled: false,
+        myLocationButtonEnabled: false,
+        zoomControlsEnabled: false,
       ),
     );
   }
