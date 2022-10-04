@@ -27,19 +27,21 @@ class ChargerSpotsListPage extends StatelessWidget {
               return const Text('error');
             }
             return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
-              child: Column(
-                children: snapshot.data!
-                    .map(
-                      (e) => InkWell(
-                        onTap: () => context.go('/map', extra: {
-                          'chargerSpot': e,
-                          'chargerSpots': snapshot.data!,
-                        }),
-                        child: ChargerSpotCard(e, key: ValueKey(e.uuid)),
-                      ),
-                    )
-                    .toList(),
+              padding: const EdgeInsets.symmetric(vertical: 22),
+              child: Center(
+                child: Column(
+                  children: snapshot.data!
+                      .map(
+                        (e) => InkWell(
+                          onTap: () => context.go('/map', extra: {
+                            'chargerSpot': e,
+                            'chargerSpots': snapshot.data!,
+                          }),
+                          child: ChargerSpotCard(e, key: ValueKey(e.uuid)),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             );
           },
