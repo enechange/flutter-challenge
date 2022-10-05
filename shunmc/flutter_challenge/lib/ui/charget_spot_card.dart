@@ -4,9 +4,10 @@ import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChargerSpotCard extends StatelessWidget {
-  const ChargerSpotCard(this.chargerSpot, {super.key});
+  const ChargerSpotCard(this.chargerSpot, {this.onTap, super.key});
 
   final ChargerSpot chargerSpot;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,51 +27,61 @@ class ChargerSpotCard extends StatelessWidget {
           ],
           color: Colors.white,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 60,
-                child: Row(
-                  children:
-                      chargerSpot.images == null || chargerSpot.images!.isEmpty
-                          ? [
-                              Expanded(
-                                child: Assets.images.noimage.image(
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                            ]
-                          : chargerSpot.images!
-                              .map(
-                                (e) => Expanded(
-                                  child: Image.network(
-                                    e.url,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(chargerSpot.name),
-                    _buildTable(),
-                    TextButton(
-                      onPressed: _goToMapApp,
-                      child: const Text('地図アプリで経路を見る'),
+        child: Material(
+          color: Colors.transparent,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(12),
+              child: Column(
+                children: [
+                  _buildImageList(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(chargerSpot.name),
+                        _buildTable(),
+                        TextButton(
+                          onPressed: _goToMapApp,
+                          child: const Text('地図アプリで経路を見る'),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildImageList() {
+    return SizedBox(
+      height: 60,
+      child: Row(
+        children: chargerSpot.images == null || chargerSpot.images!.isEmpty
+            ? [
+                Expanded(
+                  child: Assets.images.noimage.image(
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ]
+            : chargerSpot.images!
+                .map(
+                  (e) => Expanded(
+                    child: Image.network(
+                      e.url,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                )
+                .toList(),
       ),
     );
   }

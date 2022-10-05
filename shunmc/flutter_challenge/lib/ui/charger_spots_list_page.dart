@@ -32,12 +32,13 @@ class ChargerSpotsListPage extends StatelessWidget {
                 child: Column(
                   children: snapshot.data!
                       .map(
-                        (e) => InkWell(
+                        (e) => ChargerSpotCard(
+                          e,
                           onTap: () => context.go('/map', extra: {
                             'chargerSpot': e,
                             'chargerSpots': snapshot.data!,
                           }),
-                          child: ChargerSpotCard(e, key: ValueKey(e.uuid)),
+                          key: ValueKey(e.uuid),
                         ),
                       )
                       .toList(),
