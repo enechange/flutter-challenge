@@ -13,47 +13,26 @@ class $ImagesGen {
   const $ImagesGen();
 
   /// File path: images/icon_bolt.png
-  AssetGenImage get iconBoltPng => const AssetGenImage('images/icon_bolt.png');
-
-  /// File path: images/icon_bolt.svg
-  String get iconBoltSvg => 'images/icon_bolt.svg';
+  AssetGenImage get iconBolt => const AssetGenImage('images/icon_bolt.png');
 
   /// File path: images/icon_power.png
-  AssetGenImage get iconPowerPng =>
-      const AssetGenImage('images/icon_power.png');
-
-  /// File path: images/icon_power.svg
-  String get iconPowerSvg => 'images/icon_power.svg';
+  AssetGenImage get iconPower => const AssetGenImage('images/icon_power.png');
 
   /// File path: images/icon_today.png
-  AssetGenImage get iconTodayPng =>
-      const AssetGenImage('images/icon_today.png');
-
-  /// File path: images/icon_today.svg
-  String get iconTodaySvg => 'images/icon_today.svg';
+  AssetGenImage get iconToday => const AssetGenImage('images/icon_today.png');
 
   /// File path: images/icon_watch.png
-  AssetGenImage get iconWatchPng =>
-      const AssetGenImage('images/icon_watch.png');
+  AssetGenImage get iconWatch => const AssetGenImage('images/icon_watch.png');
 
-  /// File path: images/icon_watch.svg
-  String get iconWatchSvg => 'images/icon_watch.svg';
+  /// File path: images/my_location.png
+  AssetGenImage get myLocation => const AssetGenImage('images/my_location.png');
 
   /// File path: images/noimage.png
   AssetGenImage get noimage => const AssetGenImage('images/noimage.png');
 
   /// List of all assets
-  List<dynamic> get values => [
-        iconBoltPng,
-        iconBoltSvg,
-        iconPowerPng,
-        iconPowerSvg,
-        iconTodayPng,
-        iconTodaySvg,
-        iconWatchPng,
-        iconWatchSvg,
-        noimage
-      ];
+  List<AssetGenImage> get values =>
+      [iconBolt, iconPower, iconToday, iconWatch, myLocation, noimage];
 }
 
 class Assets {

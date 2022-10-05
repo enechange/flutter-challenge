@@ -96,28 +96,28 @@ class ChargerSpotCard extends StatelessWidget {
       children: [
         TableRow(
           children: [
-            Assets.images.iconPowerPng.image(),
+            Assets.images.iconPower.image(),
             const Text('利用可能'),
             Text('${chargerSpot.chargerDevices?.length}台'),
           ],
         ),
         TableRow(
           children: [
-            Assets.images.iconBoltPng.image(),
+            Assets.images.iconBolt.image(),
             const Text('充電出力'),
             Text('${chargerSpot.chargerDevices?.first.power}kW'),
           ],
         ),
         TableRow(
           children: [
-            Assets.images.iconWatchPng.image(),
+            Assets.images.iconWatch.image(),
             _buildChargerSpotNowAvailableText(chargerSpot.nowAvailable),
             Text(_getServiceTime(chargerSpot.chargerSpotServiceTimes)),
           ],
         ),
         TableRow(
           children: [
-            Assets.images.iconTodayPng.image(),
+            Assets.images.iconToday.image(),
             const Text('定休日'),
             Text(_getOffDay(chargerSpot.chargerSpotServiceTimes)),
           ],

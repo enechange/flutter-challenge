@@ -12,9 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   dio: ^4.0.6
+  flutter_hooks: ^0.18.5+1
+  geolocator: ^9.0.2
   go_router: ^5.0.5
-  url_launcher: ^6.1.6
   google_maps_flutter: ^2.2.1
+  url_launcher: ^6.1.6
   openapi:
     path: ./openapi/client
 
@@ -33,4 +35,5 @@ flutter:
     - images/icon_power.png
     - images/icon_today.png
     - images/icon_watch.png
+    - images/my_location.png
     - images/noimage.png
