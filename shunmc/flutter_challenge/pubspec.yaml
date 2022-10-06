@@ -37,3 +37,13 @@ flutter:
     - images/icon_watch.png
     - images/my_location.png
     - images/noimage.png
+
+  fonts:
+    - family: Noto Sans JP
+      fonts:
+        - asset: fonts/NotoSansJP-Black.otf
+        - asset: fonts/NotoSansJP-Bold.otf
+        - asset: fonts/NotoSansJP-Light.otf
+        - asset: fonts/NotoSansJP-Medium.otf
+        - asset: fonts/NotoSansJP-Regular.otf
+        - asset: fonts/NotoSansJP-Thin.otf

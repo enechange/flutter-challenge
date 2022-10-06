@@ -38,15 +38,19 @@ class ChargerSpotCard extends StatelessWidget {
                 children: [
                   _buildImageList(),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(chargerSpot.name),
-                        _buildTable(),
-                        TextButton(
-                          onPressed: _goToMapApp,
-                          child: const Text('地図アプリで経路を見る'),
+                        Text(
+                          chargerSpot.name,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        _buildTable(context),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: _buildGoToMapTextButton(context),
                         ),
                       ],
                     ),
@@ -90,38 +94,39 @@ class ChargerSpotCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTable() {
+  Widget _buildTable(BuildContext context) {
     return Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       columnWidths: const {
-        0: FixedColumnWidth(12),
+        0: FixedColumnWidth(20),
         1: FixedColumnWidth(80),
       },
       children: [
         TableRow(
           children: [
-            Assets.images.iconPower.image(),
+            Assets.images.iconPower.image(height: 30),
             const Text('利用可能'),
             Text('${chargerSpot.chargerDevices?.length}台'),
           ],
         ),
         TableRow(
           children: [
-            Assets.images.iconBolt.image(),
+            Assets.images.iconBolt.image(height: 30),
             const Text('充電出力'),
             Text('${chargerSpot.chargerDevices?.first.power}kW'),
           ],
         ),
         TableRow(
           children: [
-            Assets.images.iconWatch.image(),
-            _buildChargerSpotNowAvailableText(chargerSpot.nowAvailable),
+            Assets.images.iconWatch.image(height: 30),
+            _buildChargerSpotNowAvailableText(
+                context, chargerSpot.nowAvailable),
             Text(_getServiceTime(chargerSpot.chargerSpotServiceTimes)),
           ],
         ),
         TableRow(
           children: [
-            Assets.images.iconToday.image(),
+            Assets.images.iconToday.image(height: 30),
             const Text('定休日'),
             Text(_getOffDay(chargerSpot.chargerSpotServiceTimes)),
           ],
@@ -130,12 +135,23 @@ class ChargerSpotCard extends StatelessWidget {
     );
   }
 
-  Text _buildChargerSpotNowAvailableText(ChargerSpotNowAvailableEnum? value) {
+  Text _buildChargerSpotNowAvailableText(
+      BuildContext context, ChargerSpotNowAvailableEnum? value) {
     switch (value) {
       case ChargerSpotNowAvailableEnum.yes:
-        return const Text('営業中');
+        return Text(
+          '営業中',
+          style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                color: const Color(0xff55c500),
+              ),
+        );
       case ChargerSpotNowAvailableEnum.no:
-        return const Text('営業時間外');
+        return Text(
+          '営業時間外',
+          style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                color: const Color(0xff939393),
+              ),
+        );
       default:
         return const Text('');
     }
@@ -212,6 +228,37 @@ class ChargerSpotCard extends StatelessWidget {
       default:
         return '';
     }
+  }
+
+  TextButton _buildGoToMapTextButton(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minimumSize: MaterialStateProperty.all(Size.zero),
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+      ),
+      onPressed: _goToMapApp,
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: '地図アプリで経路を見る',
+              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    color: const Color(0xff55c500),
+                    decoration: TextDecoration.underline,
+                  ),
+            ),
+            const WidgetSpan(
+              child: Icon(
+                Icons.launch,
+                size: 18,
+                color: Color(0xff55c500),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future _goToMapApp() async {

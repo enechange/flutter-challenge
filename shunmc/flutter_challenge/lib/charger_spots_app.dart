@@ -10,6 +10,17 @@ class ChargerSpotsApp extends StatelessWidget {
       routerConfig: router,
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        fontFamily: 'Noto Sans JP',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              bodyText1: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyText2: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
       ),
     );
   }
