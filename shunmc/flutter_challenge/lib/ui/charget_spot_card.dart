@@ -61,27 +61,31 @@ class ChargerSpotCard extends StatelessWidget {
   }
 
   Widget _buildImageList() {
+    List<Widget> images = chargerSpot.images
+            ?.map(
+              (e) => Expanded(
+                child: Image.network(e.url, fit: BoxFit.fitWidth),
+              ),
+            )
+            .toList() ??
+        [];
+    if (images.isEmpty) {
+      images.add(
+        Expanded(child: Assets.images.noimage.image(fit: BoxFit.fitWidth)),
+      );
+    }
+    if (images.length >= 2) {
+      images = [
+        images[0],
+        const SizedBox(width: 2),
+        images[1],
+      ];
+    }
     return SizedBox(
       height: 60,
       child: Row(
-        children: chargerSpot.images == null || chargerSpot.images!.isEmpty
-            ? [
-                Expanded(
-                  child: Assets.images.noimage.image(
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ]
-            : chargerSpot.images!
-                .map(
-                  (e) => Expanded(
-                    child: Image.network(
-                      e.url,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                )
-                .toList(),
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: images,
       ),
     );
   }
