@@ -11,7 +11,7 @@ class ChargerSpotsMapPage extends HookWidget {
   const ChargerSpotsMapPage(this.chargerSpot, this.chargerSpots, {super.key});
 
   final ChargerSpot chargerSpot;
-  final List<ChargerSpot> chargerSpots;
+  final Iterable<ChargerSpot> chargerSpots;
 
   @override
   Widget build(BuildContext context) {
