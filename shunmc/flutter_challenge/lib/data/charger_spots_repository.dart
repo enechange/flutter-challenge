@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:openapi/openapi.dart';
 
 class ChargerSpotsRepository {
-  Future<List<ChargerSpot>?> getChargerSpots({
+  Future<Iterable<ChargerSpot>?> getChargerSpots({
     required String swLat,
     required String swLng,
     required String neLat,
@@ -18,6 +18,6 @@ class ChargerSpotsRepository {
       neLat: neLat,
       neLng: neLng,
     );
-    return response.data?.chargerSpots.toList();
+    return response.data?.chargerSpots;
   }
 }

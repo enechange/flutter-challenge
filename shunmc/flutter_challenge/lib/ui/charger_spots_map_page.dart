@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge/data/charger_spot_utility.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
 import 'package:flutter_challenge/ui/charget_spot_card.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -34,8 +35,10 @@ class ChargerSpotsMapPage extends HookWidget {
                     markerId: MarkerId(e.uuid),
                     position:
                         LatLng(e.latitude.toDouble(), e.longitude.toDouble()),
-                    infoWindow:
-                        InfoWindow(title: '${e.chargerDevices?.length}'),
+                    infoWindow: InfoWindow(
+                        title: ChargerSpotUtility.getAvailableSpotCount(
+                                e.chargerDevices ?? [])
+                            .toString()),
                     onTap: () => selectedSpot.value = e,
                   ),
                 )

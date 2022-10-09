@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge/data/charger_spot_utility.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
 import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -106,14 +107,16 @@ class ChargerSpotCard extends StatelessWidget {
           children: [
             Assets.images.iconPower.image(height: 30),
             const Text('利用可能'),
-            Text('${chargerSpot.chargerDevices?.length}台'),
+            Text(ChargerSpotUtility.getAvailableSpotCount(
+                    chargerSpot.chargerDevices ?? [])
+                .toString()),
           ],
         ),
         TableRow(
           children: [
             Assets.images.iconBolt.image(height: 30),
             const Text('充電出力'),
-            Text('${chargerSpot.chargerDevices?.first.power}kW'),
+            Text(ChargerSpotUtility.getPower(chargerSpot.chargerDevices ?? [])),
           ],
         ),
         TableRow(
@@ -121,14 +124,16 @@ class ChargerSpotCard extends StatelessWidget {
             Assets.images.iconWatch.image(height: 30),
             _buildChargerSpotNowAvailableText(
                 context, chargerSpot.nowAvailable),
-            Text(_getServiceTime(chargerSpot.chargerSpotServiceTimes)),
+            Text(ChargerSpotUtility.getServiceTime(
+                chargerSpot.chargerSpotServiceTimes ?? [])),
           ],
         ),
         TableRow(
           children: [
             Assets.images.iconToday.image(height: 30),
             const Text('定休日'),
-            Text(_getOffDay(chargerSpot.chargerSpotServiceTimes)),
+            Text(ChargerSpotUtility.getOffDay(
+                chargerSpot.chargerSpotServiceTimes ?? [])),
           ],
         ),
       ],
@@ -154,79 +159,6 @@ class ChargerSpotCard extends StatelessWidget {
         );
       default:
         return const Text('');
-    }
-  }
-
-  String _getServiceTime(
-      Iterable<ChargerSpotServiceTime>? chargerSpotServiceTimes) {
-    final now = DateTime.now();
-    try {
-      final chargerSpotServiceTime = chargerSpotServiceTimes!
-          .firstWhere((e) => _compareWeekDay(e.day, now.weekday));
-      if (chargerSpotServiceTime.startTime == null ||
-          chargerSpotServiceTime.endTime == null) {
-        return '';
-      }
-      return '${chargerSpotServiceTime.startTime} - ${chargerSpotServiceTime.endTime}';
-    } catch (e) {
-      return '';
-    }
-  }
-
-  bool _compareWeekDay(ChargerSpotServiceTimeDayEnum value, int weekday) {
-    switch (value) {
-      case ChargerSpotServiceTimeDayEnum.sunday:
-        return weekday == 7;
-      case ChargerSpotServiceTimeDayEnum.monday:
-        return weekday == 1;
-      case ChargerSpotServiceTimeDayEnum.tuesday:
-        return weekday == 2;
-      case ChargerSpotServiceTimeDayEnum.wednesday:
-        return weekday == 3;
-      case ChargerSpotServiceTimeDayEnum.thursday:
-        return weekday == 4;
-      case ChargerSpotServiceTimeDayEnum.friday:
-        return weekday == 5;
-      case ChargerSpotServiceTimeDayEnum.saturday:
-        return weekday == 6;
-      default:
-        return false;
-    }
-  }
-
-  String _getOffDay(Iterable<ChargerSpotServiceTime>? chargerSpotServiceTimes) {
-    final businessDays = chargerSpotServiceTimes
-        ?.where(
-            (e) => e.businessDay == ChargerSpotServiceTimeBusinessDayEnum.no)
-        .map((e) => _toStringServiceTimeDay(e.day));
-    if (businessDays == null || businessDays.isEmpty) {
-      return '-';
-    }
-    return businessDays.join('、');
-  }
-
-  String _toStringServiceTimeDay(ChargerSpotServiceTimeDayEnum value) {
-    switch (value) {
-      case ChargerSpotServiceTimeDayEnum.sunday:
-        return '日曜日';
-      case ChargerSpotServiceTimeDayEnum.monday:
-        return '月曜日';
-      case ChargerSpotServiceTimeDayEnum.tuesday:
-        return '火曜日';
-      case ChargerSpotServiceTimeDayEnum.wednesday:
-        return '水曜日';
-      case ChargerSpotServiceTimeDayEnum.thursday:
-        return '木曜日';
-      case ChargerSpotServiceTimeDayEnum.friday:
-        return '金曜日';
-      case ChargerSpotServiceTimeDayEnum.saturday:
-        return '土曜日';
-      case ChargerSpotServiceTimeDayEnum.holiday:
-        return '祝日';
-      case ChargerSpotServiceTimeDayEnum.weekday:
-        return '平日';
-      default:
-        return '';
     }
   }
 
