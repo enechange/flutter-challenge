@@ -24,6 +24,9 @@ class $ImagesGen {
   /// File path: images/icon_watch.png
   AssetGenImage get iconWatch => const AssetGenImage('images/icon_watch.png');
 
+  /// File path: images/marker.png
+  AssetGenImage get marker => const AssetGenImage('images/marker.png');
+
   /// File path: images/my_location.png
   AssetGenImage get myLocation => const AssetGenImage('images/my_location.png');
 
@@ -32,7 +35,7 @@ class $ImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [iconBolt, iconPower, iconToday, iconWatch, myLocation, noimage];
+      [iconBolt, iconPower, iconToday, iconWatch, marker, myLocation, noimage];
 }
 
 class Assets {

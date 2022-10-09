@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge/gen/fonts.gen.dart';
 import 'package:flutter_challenge/router.dart';
 
 class ChargerSpotsApp extends StatelessWidget {
@@ -10,7 +11,7 @@ class ChargerSpotsApp extends StatelessWidget {
       routerConfig: router,
       theme: ThemeData(
         primarySwatch: Colors.grey,
-        fontFamily: 'Noto Sans JP',
+        fontFamily: FontFamily.notoSansJP,
         textTheme: ThemeData.light().textTheme.copyWith(
               bodyText1: const TextStyle(
                 fontSize: 18,

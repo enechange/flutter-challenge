@@ -35,6 +35,7 @@ flutter:
     - images/icon_power.png
     - images/icon_today.png
     - images/icon_watch.png
+    - images/marker.png
     - images/my_location.png
     - images/noimage.png
 
