@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/data/charger_spot_utility.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
+import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
 import 'package:flutter_challenge/ui/charget_spot_card.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
@@ -16,7 +17,30 @@ class ChargerSpotsMapPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final selectedSpot = useState(chargerSpot);
+    final markers = useState(<Marker>{});
     GoogleMapController? mapController;
+
+    final keys = chargerSpots.toList().asMap().map(
+          (key, value) => MapEntry(value, GlobalKey()),
+        );
+
+    Future<void> generateMarker() async {
+      for (final spot in chargerSpots) {
+        final marker = Marker(
+          markerId: MarkerId(spot.uuid),
+          position: LatLng(spot.latitude.toDouble(), spot.longitude.toDouble()),
+          icon: await BitmapDescriptorUtility.fromWidget(keys[spot]!),
+          anchor: const Offset(0.5, 0.9315),
+          onTap: () => selectedSpot.value = spot,
+        );
+        markers.value.add(marker);
+      }
+      // valueへのaddだと通知が飛ばないため、妥協でnotifyListernersを呼ぶ
+      markers.notifyListeners();
+    }
+
+    generateMarker();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -29,20 +53,7 @@ class ChargerSpotsMapPage extends HookWidget {
               zoom: 16,
             ),
             onMapCreated: (controller) => mapController = controller,
-            markers: chargerSpots
-                .map(
-                  (e) => Marker(
-                    markerId: MarkerId(e.uuid),
-                    position:
-                        LatLng(e.latitude.toDouble(), e.longitude.toDouble()),
-                    infoWindow: InfoWindow(
-                        title: ChargerSpotUtility.getAvailableSpotCount(
-                                e.chargerDevices ?? [])
-                            .toString()),
-                    onTap: () => selectedSpot.value = e,
-                  ),
-                )
-                .toSet(),
+            markers: markers.value,
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
             myLocationEnabled: true,
@@ -72,6 +83,36 @@ class ChargerSpotsMapPage extends HookWidget {
                   ChargerSpotCard(selectedSpot.value),
                 ],
               ),
+            ),
+          ),
+          Transform.translate(
+            offset: const Offset(-400, 0), // 画面外に描画
+            child: Stack(
+              children: chargerSpots
+                  .map(
+                    (e) => RepaintBoundary(
+                      key: keys[e],
+                      child: SizedBox(
+                        width: 44,
+                        height: 63,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Assets.images.marker.image(),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                ChargerSpotUtility.getAvailableSpotCount(
+                                        e.chargerDevices ?? [])
+                                    .toString(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],
