@@ -26,7 +26,6 @@ class ChargerSpotsListPage extends ConsumerWidget {
                         e,
                         onTap: () => context.go('/map', extra: {
                           'chargerSpot': e,
-                          'chargerSpots': data,
                         }),
                         key: ValueKey(e.uuid),
                       ),

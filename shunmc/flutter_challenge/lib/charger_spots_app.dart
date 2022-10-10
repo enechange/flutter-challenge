@@ -21,6 +21,10 @@ class ChargerSpotsApp extends StatelessWidget {
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
               ),
+              button: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+              ),
             ),
       ),
     );
