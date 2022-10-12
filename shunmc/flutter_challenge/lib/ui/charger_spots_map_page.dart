@@ -53,9 +53,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Text(
-                        ChargerSpotUtility.getAvailableSpotCount(
-                                spot.chargerDevices ?? [])
-                            .toString(),
+                        (chargerSpot.chargerDevices?.length ?? 0).toString(),
                       ),
                     ),
                   ],
