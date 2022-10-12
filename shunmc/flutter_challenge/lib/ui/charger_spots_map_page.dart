@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge/data/charger_spot_utility.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
@@ -110,24 +109,34 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      FloatingActionButton(
-                        onPressed: () async {
-                          try {
-                            mapController?.animateCamera(
-                              CameraUpdate.newLatLngZoom(
-                                await _determinePosition(),
-                                16,
-                              ),
-                            );
-                          } catch (e) {
-                            // 何かしらの例外処理を行う
-                          }
-                        },
-                        child: Assets.images.myLocation.image(),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        alignment: Alignment.centerRight,
+                        child: FloatingActionButton(
+                          onPressed: () async {
+                            try {
+                              mapController?.animateCamera(
+                                CameraUpdate.newLatLngZoom(
+                                  await _determinePosition(),
+                                  16,
+                                ),
+                              );
+                            } catch (e) {
+                              // 何かしらの例外処理を行う
+                            }
+                          },
+                          child: Assets.images.myLocation.image(),
+                        ),
                       ),
-                      ChargerSpotCard(selectedSpot.value),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            ChargerSpotCard(selectedSpot.value),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -157,8 +166,8 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
+                      children: const [
+                        Text(
                           'このエリアでポートを検索',
                         ),
                         Icon(Icons.search),

@@ -14,7 +14,7 @@ class ChargerSpotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(10),
       child: Container(
         width: size.width - 64,
         decoration: BoxDecoration(
