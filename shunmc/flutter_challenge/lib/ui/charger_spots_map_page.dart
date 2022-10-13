@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
+import 'package:flutter_challenge/location_utility.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
 import 'package:flutter_challenge/ui/charget_spot_card.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -118,7 +119,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                             try {
                               mapController?.animateCamera(
                                 CameraUpdate.newLatLngZoom(
-                                  await _determinePosition(),
+                                  await LocationUtility.determinePosition(),
                                   16,
                                 ),
                               );
@@ -186,31 +187,5 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
         ],
       ),
     );
-  }
-
-  Future<LatLng> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    final position = await Geolocator.getCurrentPosition();
-    return LatLng(position.latitude, position.longitude);
   }
 }
