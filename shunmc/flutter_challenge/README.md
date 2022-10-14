@@ -1,16 +1,12 @@
 # flutter_challenge
 
-A new Flutter project.
+dart-defineでAPI_TOKEN, GOOGLE_API_KEYを指定してビルドしてください。
+| キー | 入れるべき値 |
+| --- | --- |
+| API_TOKEN | エネチェンジEV充電サービスAPIで利用する認証キー(X-EVENE-NATIVE-API-TOKEN) |
+| GOOGLE_API_KEY | GoogleMapPlatformで利用するAPIキー |
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+実行例
+```bash
+% flutter run --dart-define=API_TOKEN=XXX --dart-define=GOOGLE_API_KEY=XXX
+```
