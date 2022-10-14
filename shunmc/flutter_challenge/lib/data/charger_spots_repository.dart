@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_challenge/dio.dart';
 import 'package:flutter_challenge/location_utility.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,8 +9,7 @@ import 'package:openapi/openapi.dart';
 
 final chargerSpotsRepositoryProvider = Provider(
   (ref) {
-    final dio = Dio(BaseOptions(baseUrl: 'https://stg.evene.jp/'));
-    return ChargerSpotsRepository(dio);
+    return ChargerSpotsRepository(ref.watch(dioProvider));
   },
 );
 
