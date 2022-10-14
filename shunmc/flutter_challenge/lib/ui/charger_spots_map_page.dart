@@ -18,9 +18,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedSpot = useState(chargerSpot);
     final markers = useState(<Marker>{});
-    final markerWidgets = useState(<Widget>[]);
     final buttonDisplayed = useState(false);
-    final provider = ref.read(chargerSpotsProvider);
     var currentPosition = CameraPosition(
       target: LatLng(
         chargerSpot.latitude.toDouble(),
@@ -30,36 +28,12 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
     );
     GoogleMapController? mapController;
 
-    void createMarker() {
-      provider.whenData(
-        (data) async {
-          final keys = {for (var e in data!) e: GlobalKey()};
-
-          final image = Assets.images.marker.image();
-
-          markerWidgets.value = _buildMarkerWidget(data, keys, image);
-
-          // マーカーの画像が出ない事があるので、一旦長めのディレイを入れてみる
-          await Future.delayed(const Duration(milliseconds: 1000));
-
-          markers.value = await _buildMarkers(
-            data,
-            keys,
-            (spot) => selectedSpot.value = spot,
-          );
-        },
-      );
-    }
-
     return Scaffold(
       body: Stack(
         children: [
           GoogleMap(
             initialCameraPosition: currentPosition,
-            onMapCreated: (controller) {
-              mapController = controller;
-              createMarker();
-            },
+            onMapCreated: (controller) => mapController = controller,
             markers: markers.value,
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
@@ -102,10 +76,41 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                                 child: CircularProgressIndicator()),
                             error: (error, stackTrace) =>
                                 Text('error:$error,stackTrace:$stackTrace'),
-                            data: (data) => ChargerSpotsListView(
-                              data!,
-                              scrollDirection: Axis.horizontal,
-                            ),
+                            data: (data) {
+                              final keys = {
+                                for (var e in data!) e: GlobalKey()
+                              };
+                              final image = Assets.images.marker.image();
+
+                              void createMarker() async {
+                                await Future.delayed(
+                                    const Duration(milliseconds: 1000));
+
+                                markers.value = await _buildMarkers(
+                                  data,
+                                  keys,
+                                  (spot) => selectedSpot.value = spot,
+                                );
+                              }
+
+                              createMarker();
+
+                              return Stack(
+                                children: [
+                                  ChargerSpotsListView(
+                                    data,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                  Transform.translate(
+                                    offset: const Offset(-400, 0), // 画面外に描画
+                                    child: Stack(
+                                      children:
+                                          _buildMarkerWidget(data, keys, image),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                     ],
                   ),
@@ -125,7 +130,6 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                         currentPosition.zoom,
                       );
                       ref.read(positionProvider.notifier).state = position;
-                      createMarker();
                       buttonDisplayed.value = false;
                     },
                     child: Row(
@@ -139,12 +143,6 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                     ),
                   ),
               ],
-            ),
-          ),
-          Transform.translate(
-            offset: const Offset(-400, 0), // 画面外に描画
-            child: Stack(
-              children: markerWidgets.value,
             ),
           ),
         ],
