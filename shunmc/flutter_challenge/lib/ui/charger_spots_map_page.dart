@@ -5,9 +5,8 @@ import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
 import 'package:flutter_challenge/location_utility.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
-import 'package:flutter_challenge/ui/charget_spot_card.dart';
+import 'package:flutter_challenge/ui/charger_spots_list_view.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:openapi/openapi.dart';
@@ -130,14 +129,16 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                           child: Assets.images.myLocation.image(),
                         ),
                       ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            ChargerSpotCard(selectedSpot.value),
-                          ],
-                        ),
-                      ),
+                      ref.watch(chargerSpotsProvider).when(
+                            loading: () => const Center(
+                                child: CircularProgressIndicator()),
+                            error: (error, stackTrace) =>
+                                Text('error:$error,stackTrace:$stackTrace'),
+                            data: (data) => ChargerSpotsListView(
+                              data!,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
                     ],
                   ),
                 ),

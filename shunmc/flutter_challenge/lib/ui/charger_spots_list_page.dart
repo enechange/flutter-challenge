@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
-import 'package:flutter_challenge/ui/charget_spot_card.dart';
+import 'package:flutter_challenge/ui/charger_spots_list_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,22 +16,11 @@ class ChargerSpotsListPage extends ConsumerWidget {
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) =>
               Text('error:$error,stackTrace:$stackTrace'),
-          data: (data) => SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 22),
-            child: Center(
-              child: Column(
-                children: data!
-                    .map(
-                      (e) => ChargerSpotCard(
-                        e,
-                        onTap: () => context.go('/map', extra: {
-                          'chargerSpot': e,
-                        }),
-                        key: ValueKey(e.uuid),
-                      ),
-                    )
-                    .toList(),
-              ),
+          data: (data) => ChargerSpotsListView(
+            data!,
+            onTap: (e) => context.go(
+              '/map',
+              extra: {'chargerSpot': e},
             ),
           ),
         ),
