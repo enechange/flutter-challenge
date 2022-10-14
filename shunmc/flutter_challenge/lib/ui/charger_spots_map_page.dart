@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
@@ -118,7 +116,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                             try {
                               mapController?.animateCamera(
                                 CameraUpdate.newLatLngZoom(
-                                  await LocationUtility.determinePosition(),
+                                  await LocationUtility.getCurrentPosition(),
                                   16,
                                 ),
                               );
@@ -152,17 +150,11 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                       shape: const StadiumBorder(),
                     ),
                     onPressed: () async {
-                      final diff = 256 / pow(2, currentPosition.zoom);
-                      ref.read(positionProvider.notifier).state = LatLngBounds(
-                        southwest: LatLng(
-                          currentPosition.target.latitude - diff,
-                          currentPosition.target.longitude - diff,
-                        ),
-                        northeast: LatLng(
-                          currentPosition.target.latitude + diff,
-                          currentPosition.target.longitude + diff,
-                        ),
+                      final position = LocationUtility.getBounds(
+                        currentPosition.target,
+                        currentPosition.zoom,
                       );
+                      ref.read(positionProvider.notifier).state = position;
                       createMarker();
                       buttonDisplayed.value = false;
                     },

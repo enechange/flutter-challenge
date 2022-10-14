@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_challenge/dio.dart';
 import 'package:flutter_challenge/location_utility.dart';
@@ -23,18 +21,7 @@ final examplePositionProvider = Provider(
 final currentPositionProvider = FutureProvider(
   (ref) async {
     try {
-      final center = await LocationUtility.determinePosition();
-      final diff = 256 / pow(2, 16);
-      return LatLngBounds(
-        southwest: LatLng(
-          center.latitude - diff,
-          center.longitude - diff,
-        ),
-        northeast: LatLng(
-          center.latitude + diff,
-          center.longitude + diff,
-        ),
-      );
+      return LocationUtility.getCurrentPositionBounds(zoom: 16);
     } catch (e) {
       return ref.read(examplePositionProvider);
     }
