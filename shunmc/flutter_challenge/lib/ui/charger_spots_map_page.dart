@@ -33,50 +33,20 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
     void createMarker() {
       provider.whenData(
         (data) async {
-          final keys = <ChargerSpot, GlobalKey<State<StatefulWidget>>>{};
-          final tmpMarkerWidgets = <Widget>[];
-          for (final spot in data!) {
-            final key = GlobalKey();
-            keys.addEntries([MapEntry(spot, key)]);
-            final widget = RepaintBoundary(
-              key: key,
-              child: SizedBox(
-                width: 44,
-                height: 63,
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Assets.images.marker.image(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        (chargerSpot.chargerDevices?.length ?? 0).toString(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-            tmpMarkerWidgets.add(widget);
-          }
-          markerWidgets.value = tmpMarkerWidgets;
+          final keys = {for (var e in data!) e: GlobalKey()};
+
+          final image = Assets.images.marker.image();
+
+          markerWidgets.value = _buildMarkerWidget(data, keys, image);
 
           // マーカーの画像が出ない事があるので、一旦長めのディレイを入れてみる
           await Future.delayed(const Duration(milliseconds: 1000));
 
-          final tmpMarkers = <Marker>{};
-          for (final spot in data) {
-            final marker = Marker(
-              markerId: MarkerId(spot.uuid),
-              position:
-                  LatLng(spot.latitude.toDouble(), spot.longitude.toDouble()),
-              icon: await BitmapDescriptorUtility.fromWidget(keys[spot]!),
-              anchor: const Offset(0.5, 0.9315),
-              onTap: () => selectedSpot.value = spot,
-            );
-            tmpMarkers.add(marker);
-          }
-          markers.value = tmpMarkers;
+          markers.value = await _buildMarkers(
+            data,
+            keys,
+            (spot) => selectedSpot.value = spot,
+          );
         },
       );
     }
@@ -180,5 +150,55 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> _buildMarkerWidget(
+    Iterable<ChargerSpot> spots,
+    Map<ChargerSpot, GlobalKey<State<StatefulWidget>>> keys,
+    Image image,
+  ) {
+    final markerWidgets = <Widget>[];
+    for (final spot in spots) {
+      final widget = RepaintBoundary(
+        key: keys[spot],
+        child: SizedBox(
+          width: 44,
+          height: 63,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              image,
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  (chargerSpot.chargerDevices?.length ?? 0).toString(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      markerWidgets.add(widget);
+    }
+    return markerWidgets;
+  }
+
+  Future<Set<Marker>> _buildMarkers(
+    Iterable<ChargerSpot> spots,
+    Map<ChargerSpot, GlobalKey<State<StatefulWidget>>> keys,
+    Function(ChargerSpot) onTap,
+  ) async {
+    final markers = <Marker>{};
+    for (final spot in spots) {
+      final marker = Marker(
+        markerId: MarkerId(spot.uuid),
+        position: LatLng(spot.latitude.toDouble(), spot.longitude.toDouble()),
+        icon: await BitmapDescriptorUtility.fromWidget(keys[spot]!),
+        anchor: const Offset(0.5, 0.9315),
+        onTap: () => onTap,
+      );
+      markers.add(marker);
+    }
+    return markers;
   }
 }
