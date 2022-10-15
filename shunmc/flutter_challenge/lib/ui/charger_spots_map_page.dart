@@ -193,7 +193,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
         position: LatLng(spot.latitude.toDouble(), spot.longitude.toDouble()),
         icon: await BitmapDescriptorUtility.fromWidget(keys[spot]!),
         anchor: const Offset(0.5, 0.9315),
-        onTap: () => onTap,
+        onTap: () => onTap(spot),
       );
       markers.add(marker);
     }
