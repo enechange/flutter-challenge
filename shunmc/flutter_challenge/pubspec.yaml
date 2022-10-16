@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   dio: ^4.0.6
+  expandable_page_view: ^1.0.17
   fluttertoast: ^8.1.1
   flutter_hooks: ^0.18.5+1
   geolocator: ^9.0.2

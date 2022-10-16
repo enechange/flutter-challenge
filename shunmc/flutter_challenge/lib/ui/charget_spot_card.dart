@@ -69,7 +69,12 @@ class ChargerSpotCard extends StatelessWidget {
     List<Widget> images = chargerSpot.images
             ?.map(
               (e) => Expanded(
-                child: Image.network(e.url, fit: BoxFit.fitWidth),
+                child: Image.network(
+                  e.url,
+                  fit: BoxFit.fitWidth,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Assets.images.noimage.image(),
+                ),
               ),
             )
             .toList() ??

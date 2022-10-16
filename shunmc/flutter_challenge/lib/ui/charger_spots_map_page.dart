@@ -37,6 +37,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
         Fluttertoast.showToast(
           msg: '充電スポットが見つかりません。エリアを変えてお試しください。',
         );
+        markers.value = {};
         return;
       }
       final keys = {for (var e in spots) e: GlobalKey()};
