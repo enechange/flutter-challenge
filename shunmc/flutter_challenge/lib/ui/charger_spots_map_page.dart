@@ -87,16 +87,12 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                         alignment: Alignment.centerRight,
                         child: FloatingActionButton(
                           onPressed: () async {
-                            try {
-                              mapController?.animateCamera(
-                                CameraUpdate.newLatLngZoom(
-                                  await LocationUtility.getCurrentPosition(),
-                                  16,
-                                ),
-                              );
-                            } catch (e) {
-                              // 何かしらの例外処理を行う
-                            }
+                            mapController?.animateCamera(
+                              CameraUpdate.newLatLngZoom(
+                                await ref.read(currentPositionProvider.future),
+                                16,
+                              ),
+                            );
                           },
                           child: Assets.images.myLocation.image(),
                         ),
