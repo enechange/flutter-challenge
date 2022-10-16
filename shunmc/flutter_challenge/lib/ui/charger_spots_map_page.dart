@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge/data/charger_spot_utility.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
+import 'package:flutter_challenge/map_view.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
 import 'package:flutter_challenge/ui/charger_spots_map_bottom.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -24,8 +26,6 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
       target: currentPosition,
       zoom: zoom,
     );
-
-    GoogleMapController? mapController;
 
     void createMarker() async {
       final spots = await ref.read(chargerSpotsProvider.future);
@@ -58,8 +58,8 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
           GoogleMap(
             initialCameraPosition: currentCameraPosition,
             onMapCreated: (controller) {
-              mapController = controller;
               createMarker();
+              ref.read(mapControllerProvider.notifier).state = controller;
             },
             markers: markers.value,
             mapToolbarEnabled: false,
@@ -84,17 +84,33 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                         alignment: Alignment.centerRight,
                         child: FloatingActionButton(
                           onPressed: () async {
-                            mapController?.animateCamera(
-                              CameraUpdate.newLatLngZoom(
-                                await ref.read(currentPositionProvider.future),
-                                16,
-                              ),
-                            );
+                            ref.read(mapControllerProvider)?.animateCamera(
+                                  CameraUpdate.newLatLngZoom(
+                                    await ref
+                                        .read(currentPositionProvider.future),
+                                    16,
+                                  ),
+                                );
                           },
                           child: Assets.images.myLocation.image(),
                         ),
                       ),
-                      const ChargerSpotsMapBottom(),
+                      ChargerSpotsMapBottom(
+                        onPageChanged: (page) async {
+                          final spots =
+                              await ref.read(chargerSpotsProvider.future);
+                          if (spots == null) {
+                            return;
+                          }
+                          ref.read(mapControllerProvider)?.animateCamera(
+                                CameraUpdate.newLatLngZoom(
+                                  ChargerSpotUtility.getLatLng(
+                                      spots.toList()[page]),
+                                  ref.read(zoomProvider),
+                                ),
+                              );
+                        },
+                      ),
                     ],
                   ),
                 ),
