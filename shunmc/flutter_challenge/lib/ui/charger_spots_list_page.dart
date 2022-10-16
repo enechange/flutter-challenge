@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge/data/charger_spot_utility.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/ui/charger_spots_list_view.dart';
 import 'package:go_router/go_router.dart';
@@ -18,10 +19,11 @@ class ChargerSpotsListPage extends ConsumerWidget {
               Text('error:$error,stackTrace:$stackTrace'),
           data: (data) => ChargerSpotsListView(
             data!,
-            onTap: (e) => context.go(
-              '/map',
-              extra: {'chargerSpot': e},
-            ),
+            onTap: (e) {
+              ref.read(positionProvider.notifier).state =
+                  ChargerSpotUtility.getLatLng(e);
+              context.go('/map', extra: {'chargerSpot': e});
+            },
           ),
         ),
       ),

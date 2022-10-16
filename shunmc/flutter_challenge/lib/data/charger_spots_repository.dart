@@ -11,39 +11,50 @@ final chargerSpotsRepositoryProvider = Provider(
   },
 );
 
-final examplePositionProvider = Provider(
-  (ref) => LatLngBounds(
-    southwest: const LatLng(35.683331703634124, 139.7657155055581),
-    northeast: const LatLng(35.686849507072736, 139.77340835691592),
+final zoomProvider = StateProvider<double>((ref) => 16);
+
+final examplePositionProvider =
+    Provider((ref) => const LatLng(35.6850906054, 139.769561931));
+
+final examplePositionBoundsProvider = Provider(
+  (ref) => LocationUtility.getBounds(
+    ref.watch(examplePositionProvider),
+    ref.watch(zoomProvider),
   ),
 );
 
 final currentPositionProvider = FutureProvider(
   (ref) async {
     try {
-      return LocationUtility.getCurrentPositionBounds(zoom: 16);
+      return LocationUtility.getCurrentPosition();
     } catch (e) {
       return ref.read(examplePositionProvider);
     }
   },
 );
 
-final positionProvider = StateProvider<LatLngBounds?>((ref) => null);
+final currentPositionBoundsProvider = FutureProvider(
+  (ref) async => LocationUtility.getBounds(
+    await ref.watch(currentPositionProvider.future),
+    ref.watch(zoomProvider),
+  ),
+);
+
+final positionProvider =
+    StateProvider((ref) => ref.read(examplePositionProvider));
+
+final positionBoundsProvider = Provider(
+  (ref) => LocationUtility.getBounds(
+    ref.watch(positionProvider),
+    ref.watch(zoomProvider),
+  ),
+);
 
 final chargerSpotsProvider = FutureProvider(
   (ref) async {
     final repository = ref.read(chargerSpotsRepositoryProvider);
-    var position = ref.watch(positionProvider);
-    if (position != null) {
-      return repository.getChargerSpots(position);
-    }
-
-    position = await ref.read(currentPositionProvider.future);
-    final chargerSpots = await repository.getChargerSpots(position!);
-    if (chargerSpots?.isNotEmpty ?? false) {
-      return chargerSpots;
-    }
-    return await repository.getChargerSpots(ref.read(examplePositionProvider));
+    var positionBounds = ref.watch(positionBoundsProvider);
+    return repository.getChargerSpots(positionBounds);
   },
 );
 

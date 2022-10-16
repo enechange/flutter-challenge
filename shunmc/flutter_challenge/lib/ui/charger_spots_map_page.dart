@@ -3,44 +3,71 @@ import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
 import 'package:flutter_challenge/location_utility.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
-import 'package:flutter_challenge/ui/charger_spots_list_view.dart';
+import 'package:flutter_challenge/ui/charger_spots_map_bottom.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:openapi/openapi.dart';
 
 class ChargerSpotsMapPage extends HookConsumerWidget {
-  const ChargerSpotsMapPage(this.chargerSpot, {super.key});
+  const ChargerSpotsMapPage({this.chargerSpot, super.key});
 
-  final ChargerSpot chargerSpot;
+  final ChargerSpot? chargerSpot;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedSpot = useState(chargerSpot);
+    final markerWidgets = useState(<Widget>[]);
     final markers = useState(<Marker>{});
     final buttonDisplayed = useState(false);
-    var currentPosition = CameraPosition(
-      target: LatLng(
-        chargerSpot.latitude.toDouble(),
-        chargerSpot.longitude.toDouble(),
-      ),
-      zoom: 16,
+
+    final currentPosition = ref.read(positionProvider);
+    final zoom = ref.read(zoomProvider);
+    var currentCameraPosition = CameraPosition(
+      target: currentPosition,
+      zoom: zoom,
     );
+
     GoogleMapController? mapController;
+
+    void createMarker() async {
+      final spots = await ref.read(chargerSpotsProvider.future);
+      if (spots == null || spots.isEmpty) {
+        // snackbar表示
+        return;
+      }
+      final keys = {for (var e in spots) e: GlobalKey()};
+
+      final image = Assets.images.marker.image();
+
+      markerWidgets.value = _buildMarkerWidget(spots, keys, image);
+
+      // マーカーの画像が出ない事があるので、一旦長めのディレイを入れてみる
+      await Future.delayed(const Duration(milliseconds: 1000));
+
+      markers.value = await _buildMarkers(
+        spots,
+        keys,
+        (spot) => selectedSpot.value = spot,
+      );
+    }
 
     return Scaffold(
       body: Stack(
         children: [
           GoogleMap(
-            initialCameraPosition: currentPosition,
-            onMapCreated: (controller) => mapController = controller,
+            initialCameraPosition: currentCameraPosition,
+            onMapCreated: (controller) {
+              mapController = controller;
+              createMarker();
+            },
             markers: markers.value,
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
             onCameraMove: (position) {
-              currentPosition = position;
+              currentCameraPosition = position;
               buttonDisplayed.value = true;
             },
           ),
@@ -71,47 +98,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                           child: Assets.images.myLocation.image(),
                         ),
                       ),
-                      ref.watch(chargerSpotsProvider).when(
-                            loading: () => const Center(
-                                child: CircularProgressIndicator()),
-                            error: (error, stackTrace) =>
-                                Text('error:$error,stackTrace:$stackTrace'),
-                            data: (data) {
-                              final keys = {
-                                for (var e in data!) e: GlobalKey()
-                              };
-                              final image = Assets.images.marker.image();
-
-                              void createMarker() async {
-                                await Future.delayed(
-                                    const Duration(milliseconds: 1000));
-
-                                markers.value = await _buildMarkers(
-                                  data,
-                                  keys,
-                                  (spot) => selectedSpot.value = spot,
-                                );
-                              }
-
-                              createMarker();
-
-                              return Stack(
-                                children: [
-                                  ChargerSpotsListView(
-                                    data,
-                                    scrollDirection: Axis.horizontal,
-                                  ),
-                                  Transform.translate(
-                                    offset: const Offset(-400, 0), // 画面外に描画
-                                    child: Stack(
-                                      children:
-                                          _buildMarkerWidget(data, keys, image),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                      const ChargerSpotsMapBottom(),
                     ],
                   ),
                 ),
@@ -125,11 +112,11 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                       shape: const StadiumBorder(),
                     ),
                     onPressed: () async {
-                      final position = LocationUtility.getBounds(
-                        currentPosition.target,
-                        currentPosition.zoom,
-                      );
-                      ref.read(positionProvider.notifier).state = position;
+                      ref.read(zoomProvider.notifier).state =
+                          currentCameraPosition.zoom;
+                      ref.read(positionProvider.notifier).state =
+                          currentCameraPosition.target;
+                      createMarker();
                       buttonDisplayed.value = false;
                     },
                     child: Row(
@@ -143,6 +130,12 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
                     ),
                   ),
               ],
+            ),
+          ),
+          Transform.translate(
+            offset: const Offset(-400, 0), // 画面外に描画
+            child: Stack(
+              children: markerWidgets.value,
             ),
           ),
         ],
@@ -169,7 +162,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
-                  (chargerSpot.chargerDevices?.length ?? 0).toString(),
+                  (spot.chargerDevices?.length ?? 0).toString(),
                 ),
               ),
             ],

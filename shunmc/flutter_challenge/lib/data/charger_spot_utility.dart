@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/openapi.dart';
 
 class ChargerSpotUtility {
@@ -82,5 +83,9 @@ class ChargerSpotUtility {
       default:
         return false;
     }
+  }
+
+  static LatLng getLatLng(ChargerSpot spot) {
+    return LatLng(spot.latitude.toDouble(), spot.longitude.toDouble());
   }
 }

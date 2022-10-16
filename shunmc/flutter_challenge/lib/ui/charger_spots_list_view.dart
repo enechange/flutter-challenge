@@ -8,11 +8,13 @@ class ChargerSpotsListView extends ConsumerWidget {
     this.chargerSpots, {
     super.key,
     this.scrollDirection = Axis.vertical,
+    this.controller,
     this.onTap,
   });
 
   final Iterable<ChargerSpot> chargerSpots;
   final Axis scrollDirection;
+  final ScrollController? controller;
   final Function(ChargerSpot)? onTap;
 
   @override
@@ -28,6 +30,7 @@ class ChargerSpotsListView extends ConsumerWidget {
         .toList();
     return SingleChildScrollView(
       scrollDirection: scrollDirection,
+      controller: controller,
       padding: const EdgeInsets.symmetric(vertical: 22),
       child: Center(
         child: scrollDirection == Axis.vertical
