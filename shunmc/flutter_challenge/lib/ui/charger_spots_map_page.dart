@@ -5,6 +5,7 @@ import 'package:flutter_challenge/location_utility.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
 import 'package:flutter_challenge/ui/charger_spots_map_bottom.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:openapi/openapi.dart';
@@ -33,7 +34,9 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
     void createMarker() async {
       final spots = await ref.read(chargerSpotsProvider.future);
       if (spots == null || spots.isEmpty) {
-        // snackbar表示
+        Fluttertoast.showToast(
+          msg: '充電スポットが見つかりません。エリアを変えてお試しください。',
+        );
         return;
       }
       final keys = {for (var e in spots) e: GlobalKey()};
