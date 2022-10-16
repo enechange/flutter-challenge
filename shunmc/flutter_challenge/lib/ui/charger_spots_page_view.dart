@@ -10,12 +10,14 @@ class ChargerSpotsPageView extends ConsumerWidget {
     super.key,
     this.scrollDirection = Axis.horizontal,
     this.controller,
+    this.onPageChanged,
     this.onTap,
   });
 
   final Iterable<ChargerSpot> chargerSpots;
   final Axis scrollDirection;
   final PageController? controller;
+  final Function(int)? onPageChanged;
   final Function(ChargerSpot)? onTap;
 
   @override
@@ -23,6 +25,7 @@ class ChargerSpotsPageView extends ConsumerWidget {
     return ExpandablePageView(
       scrollDirection: scrollDirection,
       controller: controller,
+      onPageChanged: onPageChanged,
       children: chargerSpots
           .map(
             (e) => ChargerSpotCard(

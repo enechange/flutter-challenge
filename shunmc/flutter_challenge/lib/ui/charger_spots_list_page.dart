@@ -20,9 +20,10 @@ class ChargerSpotsListPage extends ConsumerWidget {
           data: (data) => ChargerSpotsListView(
             data!,
             onTap: (e) {
+              ref.read(selectedChargerSpotProvider.notifier).state = e;
               ref.read(positionProvider.notifier).state =
                   ChargerSpotUtility.getLatLng(e);
-              context.go('/map', extra: {'chargerSpot': e});
+              context.go('/map');
             },
           ),
         ),

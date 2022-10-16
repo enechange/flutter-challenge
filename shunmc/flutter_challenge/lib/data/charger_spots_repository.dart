@@ -11,6 +11,8 @@ final chargerSpotsRepositoryProvider = Provider(
   },
 );
 
+final selectedChargerSpotProvider = StateProvider<ChargerSpot?>((ref) => null);
+
 final zoomProvider = StateProvider<double>((ref) => 16);
 
 final examplePositionProvider =
@@ -40,8 +42,9 @@ final currentPositionBoundsProvider = FutureProvider(
   ),
 );
 
-final positionProvider =
-    StateProvider((ref) => ref.read(examplePositionProvider));
+final positionProvider = StateProvider((ref) {
+  return ref.read(examplePositionProvider);
+});
 
 final positionBoundsProvider = Provider(
   (ref) => LocationUtility.getBounds(

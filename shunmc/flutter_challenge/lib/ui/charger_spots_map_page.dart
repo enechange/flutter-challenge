@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge/data/charger_spots_repository.dart';
 import 'package:flutter_challenge/gen/assets.gen.dart';
-import 'package:flutter_challenge/location_utility.dart';
 import 'package:flutter_challenge/ui/bitmap_descriptor_utility.dart';
 import 'package:flutter_challenge/ui/charger_spots_map_bottom.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,13 +10,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:openapi/openapi.dart';
 
 class ChargerSpotsMapPage extends HookConsumerWidget {
-  const ChargerSpotsMapPage({this.chargerSpot, super.key});
-
-  final ChargerSpot? chargerSpot;
+  const ChargerSpotsMapPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedSpot = useState(chargerSpot);
     final markerWidgets = useState(<Widget>[]);
     final markers = useState(<Marker>{});
     final buttonDisplayed = useState(false);
@@ -52,7 +48,7 @@ class ChargerSpotsMapPage extends HookConsumerWidget {
       markers.value = await _buildMarkers(
         spots,
         keys,
-        (spot) => selectedSpot.value = spot,
+        (spot) => ref.read(selectedChargerSpotProvider.notifier).state = spot,
       );
     }
 
