@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'ENECHANGE_Challenge1',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "Noto Sans JP",
       ),
       home: const MapPage(),
     );
