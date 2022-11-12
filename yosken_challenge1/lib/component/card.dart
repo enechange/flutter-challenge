@@ -31,7 +31,7 @@ Widget makeCard(ChargerSpot chargerSpot, PageController pageController,
               //名前
               makeRowOfName(chargerSpot),
               //充電器数
-              makeRowOfNumber(chargerSpot),
+              makeRowOfNumber(chargerSpot, index),
               //充電出力
               makeRowOfPower(chargerSpot),
               //営業時間
@@ -46,7 +46,7 @@ Widget makeCard(ChargerSpot chargerSpot, PageController pageController,
   );
 }
 
-Widget makeCardForPageView(ChargerSpot chargerSpot) {
+Widget makeCardForPageView(ChargerSpot chargerSpot, int index) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: paddingCardsForPageView),
     child: Card(
@@ -63,7 +63,7 @@ Widget makeCardForPageView(ChargerSpot chargerSpot) {
             //名前
             makeRowOfName(chargerSpot),
             //充電器数
-            makeRowOfNumber(chargerSpot),
+            makeRowOfNumber(chargerSpot, index),
             //充電出力
             makeRowOfPower(chargerSpot),
             //営業時間
