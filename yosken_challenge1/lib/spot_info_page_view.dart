@@ -21,8 +21,6 @@ class SpotInfoPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PageController pageController =
-        PageController(viewportFraction: viewPageFraction);
     final mapIcon = myIcon;
     final mapController = googleMapController;
     final myMarkerController = markerController;

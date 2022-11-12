@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:yosken_challenge1/model/show_list_view.dart';
 import 'package:yosken_challenge1/spot_info_page_view.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/constant/others.dart';
@@ -17,7 +18,6 @@ class MapPage extends ConsumerStatefulWidget {
 }
 
 class MapPageState extends ConsumerState<MapPage> {
-  // Position? currentPosition; //現在位置
   Widget _asyncWidget = loadingIndicatorForPageView;
   Set<Marker> _markers = {};
   late BitmapDescriptor myIcon = BitmapDescriptor.defaultMarker;
@@ -90,6 +90,7 @@ class MapPageState extends ConsumerState<MapPage> {
         mapController,
         markerController,
       );
+      showListView(context, pageController, mapController);
     });
   }
   ///model_pngをUint8List型に変換

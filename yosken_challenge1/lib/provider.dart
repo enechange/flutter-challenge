@@ -21,3 +21,7 @@ final searchPositionProvider = StateProvider((ref) {
 
 Position? _currentPosition;
 final StateProvider myPositionProvider = StateProvider((ref) => _currentPosition);
+
+final spotInfoPageViewProvider = StateProvider((ref)  {
+
+});

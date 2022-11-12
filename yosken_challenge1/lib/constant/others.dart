@@ -13,6 +13,9 @@ const LatLng rangeLatLng = LatLng(0.1,0.1);
 //初期位置
 const LatLng firstLatLng = LatLng(firstLat,firstLng);
 
+final PageController pageController =
+PageController(viewportFraction: viewPageFraction);
+
 //検索ボタンのUI
 dynamic searchButtonStyle = ElevatedButton.styleFrom(
   padding: EdgeInsets.zero,
