@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yosken_challenge1/constant/others.dart';
 import 'package:yosken_challenge1/model/camera_move.dart';
+import 'package:yosken_challenge1/model/fetch_my_location.dart';
 import 'package:yosken_challenge1/model/show_list_view.dart';
 import 'package:yosken_challenge1/component/card_list.dart';
 import 'package:yosken_challenge1/component/marker.dart';
@@ -23,11 +24,11 @@ class SpotInfoPageView extends ConsumerWidget {
     final PageController pageController =
         PageController(viewportFraction: viewPageFraction);
     final mapIcon = myIcon;
-    final asyncMyPosition = ref.watch(myPositionProvider);
     final mapController = googleMapController;
     final myMarkerController = markerController;
-    final rangeProvider = ref.read(rangeStateProvider);
+    final range = ref.read(rangeStateProvider);
     final asyncValue = ref.watch(chargerSpotsFutureProvider);
+    final myPosition = ref.watch(myPositionProvider);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -44,17 +45,8 @@ class SpotInfoPageView extends ConsumerWidget {
               child: ElevatedButton(
                   style: searchButtonStyle,
                   onPressed: () {
-                    ref.read(countProvider.notifier).state++;
-
-                    asyncMyPosition.when(
-                        data: (value) {
-                          moveCamera(mapController, value, rangeProvider);
-                          ref.read(searchLatLngProvider.notifier).state = value;
-                        },
-                        // ignore: avoid_print
-                        error: (error, stack) => print('$errorText: $error'),
-                        // ignore: avoid_print
-                        loading: () => print(loadingText));
+                    moveCamera(mapController, myPosition);
+                    ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(range, myPosition);
                   },
                   child: searchButtonWidget),
             ),
@@ -80,16 +72,7 @@ class SpotInfoPageView extends ConsumerWidget {
               betweenListButtonAndMyLocationSizedBox,
               ElevatedButton(
                 onPressed: () {
-                  ref.read(countProvider.notifier).state++;
-
-                  asyncMyPosition.when(
-                      data: (value) {
-                        moveCamera(mapController, value, rangeProvider);
-                      },
-                      // ignore: avoid_print
-                      error: (error, stack) => print('$errorText: $error'),
-                      // ignore: avoid_print
-                      loading: () => print(loadingText));
+                  moveCamera(mapController, myPosition);
                 },
                 style: myLocationButtonStyle,
                 child: myLocationIconWidget,

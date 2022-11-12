@@ -7,16 +7,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yosken_challenge1/spot_info_page_view.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/constant/others.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MapPage extends StatefulWidget {
+class MapPage extends ConsumerStatefulWidget {
   const MapPage({Key? key}) : super(key: key);
 
   @override
-  State<MapPage> createState() => MapPageState();
+  MapPageState createState() => MapPageState();
 }
 
-class MapPageState extends State<MapPage> {
-  Position? currentPosition; //現在位置
+class MapPageState extends ConsumerState<MapPage> {
+  // Position? currentPosition; //現在位置
   Widget _asyncWidget = loadingIndicatorForPageView;
   Set<Marker> _markers = {};
   late BitmapDescriptor myIcon = BitmapDescriptor.defaultMarker;
@@ -42,8 +43,9 @@ class MapPageState extends State<MapPage> {
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) {
-      currentPosition = position;
-    });
+      // currentPosition = position;
+          ref.read(myPositionProvider.notifier).state = position;
+        });
 
     //marker更新
     markerController.stream.listen((event) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'src/chargespots.dart' as chargespots;
 import 'package:yosken_challenge1/component/card.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yosken_challenge1/component/card_no_result.dart';

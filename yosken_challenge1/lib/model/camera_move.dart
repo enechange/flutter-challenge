@@ -1,14 +1,12 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/src/chargespots.dart';
 
-void moveCamera(GoogleMapController googleMapController, SwAndNeLatLng swAndNeLatLng, dynamic stateProvider) {
+void moveCamera(GoogleMapController googleMapController, Position position) {
   googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(
-              swAndNeLatLng.swLat + stateProvider.latitude / 2,
-              swAndNeLatLng.swLng +
-                  stateProvider.longitude / 2),
+          target: LatLng(position.latitude,position.longitude),
           zoom: defaultZoom)));
 }
 
