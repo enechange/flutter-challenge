@@ -7,7 +7,7 @@ import 'card_image.dart';
 import 'package:yosken_challenge1/component/row_of_card/importer_card_row.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 
-Widget makeCard(ChargerSpot chargerSpot, PageController pageController,
+Widget makeCard(ChargerSpot chargerSpot,
     int index, context, GoogleMapController mapController) {
   return InkWell(
     onTap: () {

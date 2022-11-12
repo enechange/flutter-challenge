@@ -12,20 +12,18 @@ import 'package:yosken_challenge1/constant/importer_constant.dart';
 
 class SpotInfoPageView extends ConsumerWidget {
   const SpotInfoPageView(
-      this.myIcon, this.googleMapController, this.markerController,
+      this.myIcon, this.googleMapController,
       {Key? key})
       : super(key: key);
   final GoogleMapController googleMapController;
-  final StreamController<Set<Marker>> markerController;
   final BitmapDescriptor myIcon;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mapIcon = myIcon;
     final mapController = googleMapController;
-    final myMarkerController = markerController;
     final range = ref.read(rangeStateProvider);
-    final asyncValue = ref.watch(chargerSpotsFutureProvider);
+    final asyncSpot = ref.watch(chargerSpotsFutureProvider);
     final myPosition = ref.watch(myPositionProvider);
 
     return Column(
@@ -62,7 +60,7 @@ class SpotInfoPageView extends ConsumerWidget {
                 child: ElevatedButton(
                   style: showListButtonStyle,
                   onPressed: () {
-                    showListView(context, pageController, mapController);
+                    showListView(context, mapController);
                   },
                   child: showListButtonRow
                 ),
@@ -78,12 +76,13 @@ class SpotInfoPageView extends ConsumerWidget {
             ],
           ),
         ),
-        asyncValue.when(
+        asyncSpot.when(
             data: (value) {
-              // MapPageState().updateMarkers(value);
+              final mapMarker =makeMarker(value, mapIcon);
+              Future.delayed(const Duration(seconds: 1)).then((_) {
+                ref.read(markerProvider.notifier).state = mapMarker;
+              });
 
-              final markers = makeMarker(value, mapIcon);
-              myMarkerController.sink.add(markers);
               return Padding(
                 padding: const EdgeInsets.only(bottom: marginPageViewFromB),
                 child: SizedBox(

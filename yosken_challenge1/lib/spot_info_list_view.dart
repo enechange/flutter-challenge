@@ -6,14 +6,12 @@ import 'package:yosken_challenge1/component/card_no_result.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 
 class SpotInfoListView extends ConsumerWidget {
-  const SpotInfoListView(this.controller, this.googleController, {Key? key})
+  const SpotInfoListView( this.googleController, {Key? key})
       : super(key: key);
-  final PageController controller;
   final GoogleMapController googleController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageController = controller;
     final mapController = googleController;
 
     final asyncValue = ref.watch(chargerSpotsFutureProvider);
@@ -36,7 +34,7 @@ class SpotInfoListView extends ConsumerWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final spotData = value.charger_spots![index];
                   return makeCard(
-                      spotData, pageController, index, context, mapController);
+                      spotData, index, context, mapController);
                 },
               ),
             ),

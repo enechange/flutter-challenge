@@ -39,3 +39,6 @@ dynamic myLocationButtonStyle = ElevatedButton.styleFrom(
 );
 
 final RoundedRectangleBorder cardShape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(12));
+
+const Set<Marker> markers = {};
+

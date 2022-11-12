@@ -19,11 +19,9 @@ class MapPage extends ConsumerStatefulWidget {
 
 class MapPageState extends ConsumerState<MapPage> {
   Widget _asyncWidget = loadingIndicatorForPageView;
-  Set<Marker> _markers = {};
   late BitmapDescriptor myIcon = BitmapDescriptor.defaultMarker;
   final Completer<GoogleMapController> _controller = Completer();
   late StreamSubscription<Position> positionStream; //現在地をlistenし続ける関数
-  final markerController = StreamController<Set<Marker>>();
   final CameraPosition _tokyoStation = firstCameraPosition; //初期位置
   final LocationSettings locationSettings = locationSettingsForMap;
 
@@ -46,17 +44,12 @@ class MapPageState extends ConsumerState<MapPage> {
       // currentPosition = position;
           ref.read(myPositionProvider.notifier).state = position;
         });
-
-    //marker更新
-    markerController.stream.listen((event) {
-      setState(() {
-        _markers = event;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final mapMarker = ref.watch(markerProvider);
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -68,7 +61,7 @@ class MapPageState extends ConsumerState<MapPage> {
           //現在位置のボタン
           myLocationEnabled: true,
           //現在位置をマップ上に表示
-          markers: _markers,
+          markers: mapMarker,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
             asyncSpotInfoPageView();
@@ -88,9 +81,8 @@ class MapPageState extends ConsumerState<MapPage> {
       _asyncWidget = SpotInfoPageView(
         myIcon,
         mapController,
-        markerController,
       );
-      showListView(context, pageController, mapController);
+      showListView(context, mapController);
     });
   }
   ///model_pngをUint8List型に変換
