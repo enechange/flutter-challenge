@@ -1,6 +1,7 @@
 const numberTitle = '利用可能';
 const powerTitle = '充電出力';
-const timeTitle = '営業中　';
+const openTimeTitle = '営業中　';
+const closeTimeTitle = '営業時間外';
 const holidayTitle = '定休日　';
 const defaultNumber = '12台';
 const unknown = '不明';

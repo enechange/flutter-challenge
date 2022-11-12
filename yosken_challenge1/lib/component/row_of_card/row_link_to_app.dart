@@ -9,11 +9,11 @@ Widget makeLinkToApp() => Padding(
       children: const [
         Text(
           linkToAppText,
-          style: TextStyle(color: linkToAppColor, fontSize: spotInfoFontSize,decoration: TextDecoration.underline),
+          style: TextStyle(color: searchButtonForeColor, fontSize: spotInfoFontSize,decoration: TextDecoration.underline),
         ),
         Icon(
           Icons.layers_outlined,
-          color: linkToAppColor,
+          color: searchButtonForeColor,
           size: spotInfoIconSize,
         ),
       ],

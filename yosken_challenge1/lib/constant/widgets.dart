@@ -46,5 +46,12 @@ const myLocationIconWidget = Icon(
   color: Colors.white,
 );
 
+///営業中のテキスト
+const Widget textWhenOpen = Text(openTimeTitle, style: TextStyle(color: searchButtonForeColor),);
+///営業時間外のテキスト
+const Widget textWhenClose = Text(closeTimeTitle,style: TextStyle(color: closeTextColor),);
+///営業時間不明の場合のテキスト
+const Widget textWhenUnknown = Text(unknown,style: TextStyle(color: closeTextColor),);
+
 
 

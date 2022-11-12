@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart' as google;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yosken_challenge1/constant/others.dart';
 import 'package:yosken_challenge1/model/camera_move.dart';
 import 'package:yosken_challenge1/src/chargespots.dart';
@@ -8,7 +8,7 @@ import 'package:yosken_challenge1/component/row_of_card/importer_card_row.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 
 Widget makeCard(ChargerSpot chargerSpot, PageController pageController,
-    int index, context, google.GoogleMapController mapController) {
+    int index, context, GoogleMapController mapController) {
   return InkWell(
     onTap: () {
       pageController.jumpToPage(index);
