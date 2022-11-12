@@ -3,7 +3,6 @@ import 'package:yosken_challenge1/src/chargespots.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/component/card_row.dart';
 
-
 Widget makeRowOfRegularHoliday(ChargerSpot chargerSpot) {
   final serviceTimes = chargerSpot.charger_spot_service_times;
   List<String> regularHolidayList = [];

@@ -12,4 +12,3 @@ Set<Marker> makeMarker(ChargerSpots chargerSpots, BitmapDescriptor myIcon) {
       .toSet();
   return markers;
 }
-

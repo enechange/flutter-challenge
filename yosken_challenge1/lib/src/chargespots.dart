@@ -9,7 +9,8 @@ class LatLngOfSpot {
     required this.longitude,
   });
 
-  factory LatLngOfSpot.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
+  factory LatLngOfSpot.fromJson(Map<String, dynamic> json) =>
+      _$LatLngFromJson(json);
 
   Map<String, dynamic> toJson() => _$LatLngToJson(this);
 

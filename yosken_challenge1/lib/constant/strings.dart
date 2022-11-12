@@ -10,7 +10,7 @@ const noSpotResult = '充電スポットが見つかりません。\nエリア�
 const errorText = 'Error';
 const loadingText = 'Loading';
 const textForSearching = '現在地でポートを検索';
-const textForShowList ='リストを表示';
+const textForShowList = 'リストを表示';
 const apiFields = [
   'images',
   'charger_spot_service_times',

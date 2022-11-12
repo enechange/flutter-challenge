@@ -6,8 +6,7 @@ import 'package:yosken_challenge1/component/card_no_result.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 
 class SpotInfoListView extends ConsumerWidget {
-  const SpotInfoListView( this.googleController, {Key? key})
-      : super(key: key);
+  const SpotInfoListView(this.googleController, {Key? key}) : super(key: key);
   final GoogleMapController googleController;
 
   @override
@@ -33,14 +32,13 @@ class SpotInfoListView extends ConsumerWidget {
                 itemCount: value.charger_spots!.length,
                 itemBuilder: (BuildContext context, int index) {
                   final spotData = value.charger_spots![index];
-                  return makeCard(
-                      spotData, index, context, mapController);
+                  return makeCard(spotData, index, context, mapController);
                 },
               ),
             ),
           );
         },
         error: (error, stack) => Text('$errorText: $error'),
-        loading: () => loadingIndicatorForListView );
+        loading: () => loadingIndicatorForListView);
   }
 }

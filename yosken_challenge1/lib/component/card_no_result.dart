@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 
 Widget makeNoResultCard() => Stack(children: [
-  Center(
+      Center(
           child: SizedBox(
               height: noSpotResultTextHeight,
               width: noSpotResultTextWidth,
@@ -13,8 +13,9 @@ Widget makeNoResultCard() => Stack(children: [
                   shape: const StadiumBorder(),
                 ),
                 onPressed: null,
-                child: const Text(noSpotResult,
-                  style: TextStyle(fontSize: fontSizeForSpotName ),
+                child: const Text(
+                  noSpotResult,
+                  style: TextStyle(fontSize: fontSizeForSpotName),
                 ),
               ))),
       Container()

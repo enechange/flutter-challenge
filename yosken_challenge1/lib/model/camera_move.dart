@@ -4,18 +4,16 @@ import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/src/chargespots.dart';
 
 void moveCamera(GoogleMapController googleMapController, Position position) {
-  googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(position.latitude,position.longitude),
+  googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+          target: LatLng(position.latitude, position.longitude),
           zoom: defaultZoom)));
 }
 
-void moveCameraForPageChanged(GoogleMapController googleMapController, ChargerSpot chargerSpot) {
-  googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(
-              chargerSpot.latitude!, chargerSpot.longitude!),
+void moveCameraForPageChanged(
+    GoogleMapController googleMapController, ChargerSpot chargerSpot) {
+  googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+          target: LatLng(chargerSpot.latitude!, chargerSpot.longitude!),
           zoom: defaultZoom)));
 }
-
-

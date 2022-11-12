@@ -51,4 +51,3 @@ Widget makeRowOfImage(ChargerSpot chargerSpot) {
     );
   }
 }
-

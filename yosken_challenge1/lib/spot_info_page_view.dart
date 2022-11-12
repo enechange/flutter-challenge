@@ -11,9 +11,7 @@ import 'package:yosken_challenge1/component/marker.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 
 class SpotInfoPageView extends ConsumerWidget {
-  const SpotInfoPageView(
-      this.myIcon, this.googleMapController,
-      {Key? key})
+  const SpotInfoPageView(this.myIcon, this.googleMapController, {Key? key})
       : super(key: key);
   final GoogleMapController googleMapController;
   final BitmapDescriptor myIcon;
@@ -42,7 +40,8 @@ class SpotInfoPageView extends ConsumerWidget {
                   style: searchButtonStyle,
                   onPressed: () {
                     moveCamera(mapController, myPosition);
-                    ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(range, myPosition);
+                    ref.read(searchPositionProvider.notifier).state =
+                        makeSwAndNeLatLng(range, myPosition);
                   },
                   child: searchButtonWidget),
             ),
@@ -58,12 +57,11 @@ class SpotInfoPageView extends ConsumerWidget {
                 height: showListButtonHeight,
                 width: showListButtonWidth,
                 child: ElevatedButton(
-                  style: showListButtonStyle,
-                  onPressed: () {
-                    showListView(context, mapController);
-                  },
-                  child: showListButtonRow
-                ),
+                    style: showListButtonStyle,
+                    onPressed: () {
+                      showListView(context, mapController);
+                    },
+                    child: showListButtonRow),
               ),
               betweenListButtonAndMyLocationSizedBox,
               ElevatedButton(
@@ -78,7 +76,7 @@ class SpotInfoPageView extends ConsumerWidget {
         ),
         asyncSpot.when(
             data: (value) {
-              final mapMarker =makeMarker(value, mapIcon);
+              final mapMarker = makeMarker(value, mapIcon);
               Future.delayed(const Duration(seconds: 1)).then((_) {
                 ref.read(markerProvider.notifier).state = mapMarker;
               });

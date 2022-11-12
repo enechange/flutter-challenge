@@ -14,11 +14,11 @@ final chargerSpotsFutureProvider = FutureProvider((ref) async {
 });
 
 final searchPositionProvider = StateProvider((ref) {
-  return SwAndNeLatLng(firstSwLat, firstSwLng,
-      firstNeLat, firstNeLng);
+  return SwAndNeLatLng(firstSwLat, firstSwLng, firstNeLat, firstNeLng);
 });
 
 Position? _currentPosition;
-final StateProvider myPositionProvider = StateProvider((ref) => _currentPosition);
+final StateProvider myPositionProvider =
+    StateProvider((ref) => _currentPosition);
 
-final StateProvider<Set<Marker>>markerProvider = StateProvider((ref) => {});
+final StateProvider<Set<Marker>> markerProvider = StateProvider((ref) => {});

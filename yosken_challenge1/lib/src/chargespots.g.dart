@@ -16,8 +16,7 @@ Map<String, dynamic> _$LatLngToJson(LatLngOfSpot instance) => <String, dynamic>{
       'longitude': instance.longitude,
     };
 
-SpotServiceTime _$ChargerSpotServiceTimeFromJson(
-        Map<String, dynamic> json) =>
+SpotServiceTime _$ChargerSpotServiceTimeFromJson(Map<String, dynamic> json) =>
     SpotServiceTime(
       business_day: json['business_day'] as String?,
       day: json['day'] as String?,
@@ -26,8 +25,7 @@ SpotServiceTime _$ChargerSpotServiceTimeFromJson(
       today: json['today'] as bool?,
     );
 
-Map<String, dynamic> _$ChargerSpotServiceTimeToJson(
-        SpotServiceTime instance) =>
+Map<String, dynamic> _$ChargerSpotServiceTimeToJson(SpotServiceTime instance) =>
     <String, dynamic>{
       'business_day': instance.business_day,
       'day': instance.day,
@@ -36,8 +34,7 @@ Map<String, dynamic> _$ChargerSpotServiceTimeToJson(
       'today': instance.today,
     };
 
-SpotImage _$ChargerSpotImageFromJson(Map<String, dynamic> json) =>
-    SpotImage(
+SpotImage _$ChargerSpotImageFromJson(Map<String, dynamic> json) => SpotImage(
       url: json['url'] as String?,
     );
 
@@ -68,11 +65,10 @@ Map<String, dynamic> _$GogoChargerDeviceToJson(GogoChargerDevice instance) =>
 
 ChargerSpot _$ChargerSpotFromJson(Map<String, dynamic> json) => ChargerSpot(
       uuid: json['uuid'] as String?,
-      charger_spot_service_times: (json['charger_spot_service_times']
-              as List<dynamic>?)
-          ?.map(
-              (e) => SpotServiceTime.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      charger_spot_service_times:
+          (json['charger_spot_service_times'] as List<dynamic>?)
+              ?.map((e) => SpotServiceTime.fromJson(e as Map<String, dynamic>))
+              .toList(),
       now_available: json['now_available'] as String?,
       images: (json['images'] as List<dynamic>?)
           ?.map((e) => SpotImage.fromJson(e as Map<String, dynamic>))

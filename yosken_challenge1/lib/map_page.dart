@@ -4,11 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:yosken_challenge1/model/fetch_my_location.dart';
 import 'package:yosken_challenge1/model/show_list_view.dart';
 import 'package:yosken_challenge1/spot_info_page_view.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/constant/others.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yosken_challenge1/model/camera_move.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class MapPageState extends ConsumerState<MapPage> {
   @override
   void initState() {
     super.initState();
+    final range = ref.read(rangeStateProvider);
 
     //位置情報が許可されていない時に許可をリクエストする
     Future(() async {
@@ -42,7 +45,12 @@ class MapPageState extends ConsumerState<MapPage> {
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) {
       // currentPosition = position;
-          ref.read(myPositionProvider.notifier).state = position;
+      ref.read(myPositionProvider.notifier).state = position;
+    });
+
+    Future.delayed(const Duration(seconds: 1)).then((_) => {
+          ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(
+              range, ref.read(myPositionProvider.notifier).state),
         });
   }
 
@@ -72,7 +80,7 @@ class MapPageState extends ConsumerState<MapPage> {
     );
   }
 
-  ///model_mapControllerがcreateされるまでawait
+  ///model_mapControllerがcreateされるまでawait(初回起動時のみ)
   Future<void> asyncSpotInfoPageView() async {
     final GoogleMapController mapController = await _controller.future;
     final myIcon = BitmapDescriptor.fromBytes(
@@ -83,8 +91,10 @@ class MapPageState extends ConsumerState<MapPage> {
         mapController,
       );
       showListView(context, mapController);
+      moveCamera(mapController, ref.read(myPositionProvider.notifier).state);
     });
   }
+
   ///model_pngをUint8List型に変換
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
