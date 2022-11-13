@@ -10,7 +10,6 @@ import 'package:yosken_challenge1/spot_info_page_view.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
 import 'package:yosken_challenge1/constant/others.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yosken_challenge1/model/camera_move.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -20,17 +19,21 @@ class MapPage extends ConsumerStatefulWidget {
 }
 
 class MapPageState extends ConsumerState<MapPage> {
-  Widget _asyncWidget = loadingIndicatorForPageView;
+  dynamic _asyncWidget = loadingIndicatorForPageView;
   late BitmapDescriptor myIcon = BitmapDescriptor.defaultMarker;
   final Completer<GoogleMapController> _controller = Completer();
   late StreamSubscription<Position> positionStream; //現在地をlistenし続ける関数
-  final CameraPosition _tokyoStation = firstCameraPosition; //初期位置
   final LocationSettings locationSettings = locationSettingsForMap;
+  late LatLng _initialPosition;
+  late bool _loading;
+
 
   @override
   void initState() {
     super.initState();
     final range = ref.read(rangeStateProvider);
+    _loading = true;
+    // _getUserLocation();
 
     //位置情報が許可されていない時に許可をリクエストする
     Future(() async {
@@ -38,45 +41,54 @@ class MapPageState extends ConsumerState<MapPage> {
       if (permission == LocationPermission.denied) {
         await Geolocator.requestPermission();
       }
+      //現在位置を更新し続ける
+      positionStream =
+          Geolocator.getPositionStream(locationSettings: locationSettings)
+              .listen((Position? position) {
+            // currentPosition = position;
+            ref.read(myPositionProvider.notifier).state = position;
+          });
+
+      Future.delayed(const Duration(seconds: 1)).then((_) => {
+        ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(
+            range, ref.read(myPositionProvider.notifier).state),
+      });
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      setState(() {
+        _initialPosition = LatLng(position.latitude, position.longitude);
+        _loading = false;
+      });
     });
 
-    //現在位置を更新し続ける
-    positionStream =
-        Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position? position) {
-      // currentPosition = position;
-      ref.read(myPositionProvider.notifier).state = position;
-    });
 
-    Future.delayed(const Duration(seconds: 1)).then((_) => {
-          ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(
-              range, ref.read(myPositionProvider.notifier).state),
-        });
   }
 
   @override
   Widget build(BuildContext context) {
     final mapMarker = ref.watch(markerProvider);
 
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        GoogleMap(
-          mapType: MapType.normal,
-          padding: mapCenterPosition,
-          initialCameraPosition: _tokyoStation,
-          myLocationButtonEnabled: false,
-          //現在位置のボタン
-          myLocationEnabled: true,
-          //現在位置をマップ上に表示
-          markers: mapMarker,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-            asyncSpotInfoPageView();
-          },
-        ),
-        _asyncWidget,
-      ],
+    return _loading ? loadingIndicatorForPageView : SafeArea(
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          GoogleMap(
+            mapType: MapType.normal,
+            padding: mapCenterPosition,
+            initialCameraPosition: CameraPosition(target: _initialPosition,zoom: defaultZoom),
+            myLocationButtonEnabled: false,
+            //現在位置のボタン
+            myLocationEnabled: true,
+            //現在位置をマップ上に表示
+            markers: mapMarker,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+              asyncSpotInfoPageView();
+            },
+          ),
+          _asyncWidget,
+        ],
+      ),
     );
   }
 
@@ -91,7 +103,6 @@ class MapPageState extends ConsumerState<MapPage> {
         mapController,
       );
       showListView(context, mapController);
-      moveCamera(mapController, ref.read(myPositionProvider.notifier).state);
     });
   }
 

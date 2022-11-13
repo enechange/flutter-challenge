@@ -18,6 +18,7 @@ class SpotInfoPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('pageview');
     final mapIcon = myIcon;
     final mapController = googleMapController;
     final range = ref.read(rangeStateProvider);
