@@ -16,9 +16,9 @@ Widget makeCard(ChargerSpot chargerSpot, int index, context,
       moveCameraForPageChanged(mapController, chargerSpot);
     },
     child: Padding(
-      padding: const EdgeInsets.only(bottom: betweenCards),
+      padding: const EdgeInsets.only(bottom: betweenCardsForListView),
       child: Card(
-          margin: const EdgeInsets.symmetric(horizontal: paddingFromSide),
+          margin: const EdgeInsets.symmetric(horizontal: paddingOfCardsFromSide),
           elevation: cardElevation,
           shadowColor: cardShadowColor,
           color: Colors.white,
@@ -48,7 +48,7 @@ Widget makeCard(ChargerSpot chargerSpot, int index, context,
 
 Widget makeCardForPageView(ChargerSpot chargerSpot, int index) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: paddingCardsForPageView),
+    padding: const EdgeInsets.symmetric(horizontal: betweenCardsForPageView),
     child: Card(
         margin: EdgeInsets.zero,
         shadowColor: cardShadowColor,

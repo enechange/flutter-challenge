@@ -17,3 +17,7 @@ void moveCameraForPageChanged(
           target: LatLng(chargerSpot.latitude!, chargerSpot.longitude!),
           zoom: defaultZoom)));
 }
+void moveCameraToFirstSpot(GoogleMapController googleMapController,ChargerSpots chargerSpots) {
+  chargerSpots.charger_spots!.isEmpty ? null :
+      moveCameraForPageChanged(googleMapController,chargerSpots.charger_spots![0]);
+}

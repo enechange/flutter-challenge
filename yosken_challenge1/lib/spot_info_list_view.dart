@@ -18,8 +18,7 @@ class SpotInfoListView extends ConsumerWidget {
     return asyncValue.when(
         data: (value) {
           if (value.charger_spots!.isEmpty) {
-            final card = makeNoResultCard();
-            return card;
+            return makeNoResultCard();
           }
           return SizedBox(
             height: double.infinity,
@@ -38,7 +37,7 @@ class SpotInfoListView extends ConsumerWidget {
             ),
           );
         },
-        error: (error, stack) => Text('$errorText: $error'),
+        error: (error, stack) => makeNoResultCard(),
         loading: () => loadingIndicatorForListView);
   }
 }

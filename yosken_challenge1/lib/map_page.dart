@@ -67,28 +67,28 @@ class MapPageState extends ConsumerState<MapPage> {
   @override
   Widget build(BuildContext context) {
     final mapMarker = ref.watch(markerProvider);
+    final cameraCenterPadding = ref.watch(cameraCenterPositionProvider);
 
-    return _loading ? loadingIndicatorForPageView : SafeArea(
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          GoogleMap(
-            mapType: MapType.normal,
-            padding: mapCenterPosition,
-            initialCameraPosition: CameraPosition(target: _initialPosition,zoom: defaultZoom),
-            myLocationButtonEnabled: false,
-            //現在位置のボタン
-            myLocationEnabled: true,
-            //現在位置をマップ上に表示
-            markers: mapMarker,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-              asyncSpotInfoPageView();
-            },
-          ),
-          _asyncWidget,
-        ],
-      ),
+    return _loading ? loadingIndicatorForStartup : Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        GoogleMap(
+          mapType: MapType.normal,
+          padding: cameraCenterPadding,
+          initialCameraPosition: CameraPosition(target: _initialPosition,zoom: defaultZoom),
+          myLocationButtonEnabled: false,
+          //現在位置のボタン
+          myLocationEnabled: true,
+          //現在位置をマップ上に表示
+          zoomControlsEnabled: false,
+          markers: mapMarker,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+            asyncSpotInfoPageView();
+          },
+        ),
+        _asyncWidget,
+      ],
     );
   }
 
@@ -103,6 +103,7 @@ class MapPageState extends ConsumerState<MapPage> {
         mapController,
       );
       showListView(context, mapController);
+      ref.read(cameraCenterPositionProvider.notifier).state = cameraCenterPosition;
     });
   }
 

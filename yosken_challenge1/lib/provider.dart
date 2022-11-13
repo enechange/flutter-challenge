@@ -22,3 +22,5 @@ final StateProvider myPositionProvider =
     StateProvider((ref) => _currentPosition);
 
 final StateProvider<Set<Marker>> markerProvider = StateProvider((ref) => {});
+
+final cameraCenterPositionProvider = StateProvider((ref) => firstCameraCenterPosition);

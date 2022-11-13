@@ -8,7 +8,8 @@ const double spotInfoPaddingFromL = 16;
 const double spotInfoPaddingFromT = 0;
 const double spotInfoPaddingFromR = 16;
 const double spotInfoPaddingFromB = 12;
-const EdgeInsets spotInfoPadding = EdgeInsets.fromLTRB(spotInfoPaddingFromL, spotInfoPaddingFromT, spotInfoPaddingFromR, spotInfoPaddingFromB);
+const EdgeInsets spotInfoPadding = EdgeInsets.fromLTRB(spotInfoPaddingFromL,
+    spotInfoPaddingFromT, spotInfoPaddingFromR, spotInfoPaddingFromB);
 
 const double spotInfoHeight = 19;
 const double spotInfoIconSize = 14;
@@ -16,17 +17,16 @@ const double spotInfoMargin = 28;
 const double spotInfoFontSize = 14;
 
 //card
-const double betweenCards = 20;
-const double paddingFromSide = 32;
+const double betweenCardsForListView = 20;
+const double paddingOfCardsFromSide = 32;
 const double cardElevation = 10;
 const double cardImageHeight = 72;
 const EdgeInsets cardNamePadding = EdgeInsets.fromLTRB(16, 8, 16, 8);
 const double cardNameHeight = 25;
 const double cardNameFontSize = 18;
-const EdgeInsets linkToAppPadding = EdgeInsets.fromLTRB(16,0,16,16);
+const EdgeInsets linkToAppPadding = EdgeInsets.fromLTRB(16, 0, 16, 16);
 const double marginCardFromB = 18;
-const double paddingCardsForPageView = 8;
-
+const double betweenCardsForPageView = 8;
 
 const double fontSizeForSpotName = 18;
 
@@ -40,9 +40,12 @@ const double loadingPageViewIndicatorPadding = 116;
 const double loadingPageViewIndicatorSize = 80;
 
 //検索ボタン
-const double marginForSearchButton = 60;
-const EdgeInsets marginForTextOfSearchButton = EdgeInsets.symmetric(horizontal: 27);
-const double searchButtonSize = 396;
+const double searchButtonPaddingFromT = 60;
+const EdgeInsets marginForTextOfSearchButton =
+    EdgeInsets.symmetric(horizontal: 27);
+const double searchButtonWidth = 396;
+const double searchButtonHeight = 62;
+const EdgeInsets paddingForSearchButton = EdgeInsets.symmetric(horizontal: 16);
 
 //Cardのサイズ
 const double cardWidth = 365;
@@ -50,7 +53,9 @@ const double cardHeight = 272;
 
 //現在地ボタンの直径
 const double myLocationButtonSize = 62;
-const EdgeInsets myLocationButtonPadding = EdgeInsets.fromLTRB(0, 0, 16, 16);
+const double paddingForMyLocationButton = 16;
+const EdgeInsets myLocationButtonPadding = EdgeInsets.fromLTRB(
+    0, 0, paddingForMyLocationButton, paddingForMyLocationButton);
 
 //Google Mapのズーム値
 const double defaultZoom = 14;
@@ -69,15 +74,18 @@ const double firstNeLat = 35.686849507072736;
 const double firstNeLng = 139.77340835691592;
 
 //初期カメラ位置(東京駅)
-const double firstLat =  35.681789;
-const double firstLng =  139.766948;
+const double firstLat = 35.681789;
+const double firstLng = 139.766948;
 
 //DraggableScrollableSheetの引数
-const double  draggableScrollableSheetFraction = 0.92;
+const double draggableScrollableSheetFraction = 0.92;
 
 //マップのカメラ中心のオフセット
-const EdgeInsets mapCenterPosition = EdgeInsets.fromLTRB(0, 0, 0, 240);
+const EdgeInsets firstCameraCenterPosition = EdgeInsets.zero;
+const EdgeInsets cameraCenterPosition =
+    EdgeInsets.fromLTRB(0, cameraCenterOffsetFromT, 0, cameraCenterOffsetFromB);
+const double cameraCenterOffsetFromB = marginPageViewFromB + cardHeight;
+const double cameraCenterOffsetFromT =
+    searchButtonHeight + searchButtonPaddingFromT;
 
 const int markerSize = 150;
-
-

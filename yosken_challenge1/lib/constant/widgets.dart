@@ -15,6 +15,17 @@ const Widget loadingIndicatorForListView = Center(
         width: loadingPageViewIndicatorSize,
         child: CircularProgressIndicator()));
 
+final Widget loadingIndicatorForStartup = Scaffold(
+  body:   Center(
+    child: Container(
+      color: Colors.white,
+      height: loadingPageViewIndicatorSize,
+      width: loadingPageViewIndicatorSize,
+      child: const CircularProgressIndicator(),
+    ),
+  ),
+);
+
 ///検索ボタン
 final Widget searchButtonWidget = Padding(
   padding: marginForTextOfSearchButton,
@@ -60,6 +71,6 @@ const Widget textWhenClose = Text(
 
 ///営業時間不明の場合のテキスト
 const Widget textWhenUnknown = Text(
-  unknown,
+  unknownTimeTitle,
   style: TextStyle(color: closeTextColor),
 );

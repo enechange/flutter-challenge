@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:yosken_challenge1/component/card_no_result.dart';
 import 'package:yosken_challenge1/constant/others.dart';
 import 'package:yosken_challenge1/model/camera_move.dart';
 import 'package:yosken_challenge1/model/fetch_my_location.dart';
@@ -18,7 +19,6 @@ class SpotInfoPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('pageview');
     final mapIcon = myIcon;
     final mapController = googleMapController;
     final range = ref.read(rangeStateProvider);
@@ -29,14 +29,15 @@ class SpotInfoPageView extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         const SizedBox(
-          height: marginForSearchButton,
+          height: searchButtonPaddingFromT,
         ),
         Expanded(
           child: Container(
             alignment: Alignment.topCenter,
+            padding: paddingForSearchButton,
             child: SizedBox(
-              width: searchButtonSize,
-              height: myLocationButtonSize,
+              width: searchButtonWidth,
+              height: searchButtonHeight,
               child: ElevatedButton(
                   style: searchButtonStyle,
                   onPressed: () {
@@ -77,6 +78,8 @@ class SpotInfoPageView extends ConsumerWidget {
         ),
         asyncSpot.when(
             data: (value) {
+              moveCameraToFirstSpot(mapController, value);
+
               final mapMarker = makeMarker(value, mapIcon);
               Future.delayed(const Duration(seconds: 1)).then((_) {
                 ref.read(markerProvider.notifier).state = mapMarker;
@@ -97,7 +100,7 @@ class SpotInfoPageView extends ConsumerWidget {
                 ),
               );
             },
-            error: (error, stack) => Text('$errorText: $error'),
+            error: (error, stack) => noResultCardForError,
             loading: () => loadingIndicatorForPageView),
       ],
     );
