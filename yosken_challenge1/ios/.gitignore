@@ -33,5 +33,3 @@ Runner/GeneratedPluginRegistrant.*
 !default.pbxuser
 !default.perspectivev3
 
-# google map api key
-AppDelegates.swift

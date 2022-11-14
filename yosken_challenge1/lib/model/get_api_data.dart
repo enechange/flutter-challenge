@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:yosken_challenge1/secret/key.dart' as key;
 import 'package:http/http.dart' as http;
 import 'package:yosken_challenge1/src/chargespots.dart';
 import 'package:yosken_challenge1/constant/importer_constant.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 Future<ChargerSpots> fetchChargerSpots(SwAndNeLatLng swAndNeLatLng) async {
   final queryParameters = {
@@ -15,7 +15,7 @@ Future<ChargerSpots> fetchChargerSpots(SwAndNeLatLng swAndNeLatLng) async {
   final uri = Uri.https(uriHost, uriPath, queryParameters);
   final response = await http.get(uri, headers: {
     'accept': uriHeaderAccept,
-    'X-EVENE-NATIVE-API-TOKEN': key.token
+    'X-EVENE-NATIVE-API-TOKEN': FlutterConfig.get('CHALLENGE_API_TOKEN')
   });
   if (response.statusCode == 200) {
     return ChargerSpots.fromJson(json.decode(response.body));

@@ -12,5 +12,3 @@ key.properties
 **/*.keystore
 **/*.jks
 
-# google map api key
-AndroidManifest.xml
