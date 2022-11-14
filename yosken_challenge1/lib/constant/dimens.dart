@@ -28,10 +28,12 @@ const EdgeInsets linkToAppPadding = EdgeInsets.fromLTRB(16, 0, 16, 16);
 const double marginCardFromB = 18;
 const double betweenCardsForPageView = 8;
 
+
 const double fontSizeForSpotName = 18;
 
 const double noSpotResultTextHeight = 100;
 const double noSpotResultTextWidth = 400;
+const EdgeInsets noSpotResultPadding = EdgeInsets.fromLTRB(paddingOfCardsFromSide, 0, paddingOfCardsFromSide, marginPageViewFromB);
 
 //PageViewのページが表示される割合
 const double viewPageFraction = 0.85;

@@ -8,6 +8,7 @@ const defaultNumber = '12台';
 const unknown = '不明';
 const hyphen = '-';
 const noSpotResult = '充電スポットが見つかりません。\nエリアを変えてお試しください。';
+const searchErrorText = '予期せぬエラーが発生しました。\nもう一度お試しください。';
 const errorText = 'Error';
 const loadingText = 'Loading';
 const textForSearching = '現在地でポートを検索';

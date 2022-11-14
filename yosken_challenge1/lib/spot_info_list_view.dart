@@ -37,7 +37,7 @@ class SpotInfoListView extends ConsumerWidget {
             ),
           );
         },
-        error: (error, stack) => makeNoResultCard(),
+        error: (error, stack) => searchErrorWidgetForListView,
         loading: () => loadingIndicatorForListView);
   }
 }
