@@ -49,16 +49,18 @@ class MapPageState extends ConsumerState<MapPage> {
             ref.read(myPositionProvider.notifier).state = position;
           });
 
-      Future.delayed(const Duration(seconds: 1)).then((_) => {
-        ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(
-            range, ref.read(myPositionProvider.notifier).state),
-      });
+
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       setState(() {
         _initialPosition = LatLng(position.latitude, position.longitude);
         _loading = false;
+        Future.delayed(const Duration(seconds: 1)).then((_) => {
+          ref.read(searchPositionProvider.notifier).state = makeSwAndNeLatLng(
+              range, position),
+        });
       });
+
     });
 
 
