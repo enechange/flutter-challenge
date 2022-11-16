@@ -14,21 +14,17 @@ Widget makeRowOfRegularHoliday(ChargerSpot chargerSpot) {
 
 List<String> makeRegularHolidayList(
     List<SpotServiceTime> serviceTimes, List<String> regularHoliday) {
-  Map<String, String> dayOfWeek = {
-    'Sunday': '日曜日',
-    'Monday': '月曜日',
-    'Tuesday': '火曜日',
-    'Wednesday': '水曜日',
-    'Thursday': '木曜日',
-    'Friday': '金曜日',
-    'Saturday': '土曜日',
-    'Holiday': '祝日',
-    'Weekday': '平日',
-  };
 
   for (SpotServiceTime serviceTime in serviceTimes) {
     if (serviceTime.business_day == 'no') {
       regularHoliday.add(dayOfWeek[serviceTime.day]!);
+    }
+  }
+  //定休日が５個以上ある場合、一文字に変換する
+  if(regularHoliday.length>4){
+    for(int i = 0 ;i<regularHoliday.length;i++){
+      final day = regularHoliday[i];
+      regularHoliday[i] = dayOfWeekInOneCharacter[day]!;
     }
   }
   return regularHoliday.isNotEmpty ? regularHoliday : [hyphen];

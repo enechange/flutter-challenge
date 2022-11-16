@@ -10,7 +10,7 @@ const CameraPosition firstCameraPosition =
 const LocationSettings locationSettingsForMap =
     LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 100);
 //検索範囲
-const LatLng rangeLatLng = LatLng(0.2, 0.2);
+const LatLng rangeLatLng = LatLng(0.3, 0.3);
 //初期位置
 const LatLng firstLatLng = LatLng(firstLat, firstLng);
 

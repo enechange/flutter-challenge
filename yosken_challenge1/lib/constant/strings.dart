@@ -21,3 +21,27 @@ const apiFields = [
   'gogoev_charger_devices'
 ];
 const String linkToAppText = '地図アプリで経路を見る';
+
+const Map<String, String> dayOfWeek = {
+  'Sunday': '日曜日',
+  'Monday': '月曜日',
+  'Tuesday': '火曜日',
+  'Wednesday': '水曜日',
+  'Thursday': '木曜日',
+  'Friday': '金曜日',
+  'Saturday': '土曜日',
+  'Holiday': '祝日',
+  'Weekday': '平日',
+};
+
+const Map<String, String> dayOfWeekInOneCharacter = {
+  '日曜日': '日',
+  '月曜日': '月',
+  '火曜日': '火',
+  '水曜日': '水',
+  '木曜日': '木',
+  '金曜日': '金',
+  '土曜日': '土',
+  '祝日': '祝',
+  '平日': '平日',
+};
