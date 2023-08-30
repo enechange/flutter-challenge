@@ -26,6 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    namespace "com.flutter.challenge1.yuta.ktd.flutter_challenge1_yuta_ktd"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
