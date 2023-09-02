@@ -40,7 +40,7 @@ dependencies:
   json_annotation: ^4.8.1
   dio: ^5.3.2
 
-  open_api:
+  openapi:
     path: ./open_api/dist/
 
 dev_dependencies:
