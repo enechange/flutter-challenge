@@ -24,7 +24,7 @@ mixin _$ChargerSpot {
   String get name => throw _privateConstructorUsedError;
   num get latitude => throw _privateConstructorUsedError;
   num get longitude => throw _privateConstructorUsedError;
-  ModelSource get source_ => throw _privateConstructorUsedError;
+  ModelSource get source => throw _privateConstructorUsedError;
   String? get note => throw _privateConstructorUsedError;
   List<String> get directions => throw _privateConstructorUsedError;
   MarkerLabel? get markerLabel => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ mixin _$ChargerSpot {
   String? get parkingFee => throw _privateConstructorUsedError;
   String? get advanceContact => throw _privateConstructorUsedError;
   List<String> get gogoevNotes => throw _privateConstructorUsedError;
-  List<String> get maintenanceNote => throw _privateConstructorUsedError;
+  List<String?> get maintenanceNote => throw _privateConstructorUsedError;
   MaintenanceStatus? get maintenanceStatus =>
       throw _privateConstructorUsedError;
 
@@ -69,7 +69,7 @@ abstract class $ChargerSpotCopyWith<$Res> {
       String name,
       num latitude,
       num longitude,
-      ModelSource source_,
+      ModelSource source,
       String? note,
       List<String> directions,
       MarkerLabel? markerLabel,
@@ -89,7 +89,7 @@ abstract class $ChargerSpotCopyWith<$Res> {
       String? parkingFee,
       String? advanceContact,
       List<String> gogoevNotes,
-      List<String> maintenanceNote,
+      List<String?> maintenanceNote,
       MaintenanceStatus? maintenanceStatus});
 }
 
@@ -110,7 +110,7 @@ class _$ChargerSpotCopyWithImpl<$Res, $Val extends ChargerSpot>
     Object? name = null,
     Object? latitude = null,
     Object? longitude = null,
-    Object? source_ = null,
+    Object? source = null,
     Object? note = freezed,
     Object? directions = null,
     Object? markerLabel = freezed,
@@ -148,9 +148,9 @@ class _$ChargerSpotCopyWithImpl<$Res, $Val extends ChargerSpot>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as num,
-      source_: null == source_
-          ? _value.source_
-          : source_ // ignore: cast_nullable_to_non_nullable
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
               as ModelSource,
       note: freezed == note
           ? _value.note
@@ -225,7 +225,7 @@ class _$ChargerSpotCopyWithImpl<$Res, $Val extends ChargerSpot>
       maintenanceNote: null == maintenanceNote
           ? _value.maintenanceNote
           : maintenanceNote // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String?>,
       maintenanceStatus: freezed == maintenanceStatus
           ? _value.maintenanceStatus
           : maintenanceStatus // ignore: cast_nullable_to_non_nullable
@@ -247,7 +247,7 @@ abstract class _$$_ChargerSpotCopyWith<$Res>
       String name,
       num latitude,
       num longitude,
-      ModelSource source_,
+      ModelSource source,
       String? note,
       List<String> directions,
       MarkerLabel? markerLabel,
@@ -267,7 +267,7 @@ abstract class _$$_ChargerSpotCopyWith<$Res>
       String? parkingFee,
       String? advanceContact,
       List<String> gogoevNotes,
-      List<String> maintenanceNote,
+      List<String?> maintenanceNote,
       MaintenanceStatus? maintenanceStatus});
 }
 
@@ -286,7 +286,7 @@ class __$$_ChargerSpotCopyWithImpl<$Res>
     Object? name = null,
     Object? latitude = null,
     Object? longitude = null,
-    Object? source_ = null,
+    Object? source = null,
     Object? note = freezed,
     Object? directions = null,
     Object? markerLabel = freezed,
@@ -324,9 +324,9 @@ class __$$_ChargerSpotCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as num,
-      source_: null == source_
-          ? _value.source_
-          : source_ // ignore: cast_nullable_to_non_nullable
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
               as ModelSource,
       note: freezed == note
           ? _value.note
@@ -401,7 +401,7 @@ class __$$_ChargerSpotCopyWithImpl<$Res>
       maintenanceNote: null == maintenanceNote
           ? _value._maintenanceNote
           : maintenanceNote // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String?>,
       maintenanceStatus: freezed == maintenanceStatus
           ? _value.maintenanceStatus
           : maintenanceStatus // ignore: cast_nullable_to_non_nullable
@@ -419,7 +419,7 @@ class _$_ChargerSpot implements _ChargerSpot {
       required this.name,
       required this.latitude,
       required this.longitude,
-      required this.source_,
+      required this.source,
       this.note,
       final List<String> directions = const [],
       this.markerLabel,
@@ -439,7 +439,7 @@ class _$_ChargerSpot implements _ChargerSpot {
       this.parkingFee,
       this.advanceContact,
       final List<String> gogoevNotes = const [],
-      final List<String> maintenanceNote = const [],
+      final List<String?> maintenanceNote = const [],
       this.maintenanceStatus})
       : _directions = directions,
         _images = images,
@@ -465,7 +465,7 @@ class _$_ChargerSpot implements _ChargerSpot {
   @override
   final num longitude;
   @override
-  final ModelSource source_;
+  final ModelSource source;
   @override
   final String? note;
   final List<String> _directions;
@@ -566,10 +566,10 @@ class _$_ChargerSpot implements _ChargerSpot {
     return EqualUnmodifiableListView(_gogoevNotes);
   }
 
-  final List<String> _maintenanceNote;
+  final List<String?> _maintenanceNote;
   @override
   @JsonKey()
-  List<String> get maintenanceNote {
+  List<String?> get maintenanceNote {
     if (_maintenanceNote is EqualUnmodifiableListView) return _maintenanceNote;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_maintenanceNote);
@@ -580,7 +580,7 @@ class _$_ChargerSpot implements _ChargerSpot {
 
   @override
   String toString() {
-    return 'ChargerSpot(uuid: $uuid, name: $name, latitude: $latitude, longitude: $longitude, source_: $source_, note: $note, directions: $directions, markerLabel: $markerLabel, images: $images, serviceTimeNote: $serviceTimeNote, nowAvailable: $nowAvailable, groupedTotalUnitPricesThisMonthNextMonth: $groupedTotalUnitPricesThisMonthNextMonth, groupedTotalUnitPricesThisMonthNextMonthByUser: $groupedTotalUnitPricesThisMonthNextMonthByUser, chargerSpotServiceTimes: $chargerSpotServiceTimes, chargerDevices: $chargerDevices, gogoevChargerDevices: $gogoevChargerDevices, address: $address, facilityType: $facilityType, phoneNumber: $phoneNumber, parkingFee: $parkingFee, advanceContact: $advanceContact, gogoevNotes: $gogoevNotes, maintenanceNote: $maintenanceNote, maintenanceStatus: $maintenanceStatus)';
+    return 'ChargerSpot(uuid: $uuid, name: $name, latitude: $latitude, longitude: $longitude, source: $source, note: $note, directions: $directions, markerLabel: $markerLabel, images: $images, serviceTimeNote: $serviceTimeNote, nowAvailable: $nowAvailable, groupedTotalUnitPricesThisMonthNextMonth: $groupedTotalUnitPricesThisMonthNextMonth, groupedTotalUnitPricesThisMonthNextMonthByUser: $groupedTotalUnitPricesThisMonthNextMonthByUser, chargerSpotServiceTimes: $chargerSpotServiceTimes, chargerDevices: $chargerDevices, gogoevChargerDevices: $gogoevChargerDevices, address: $address, facilityType: $facilityType, phoneNumber: $phoneNumber, parkingFee: $parkingFee, advanceContact: $advanceContact, gogoevNotes: $gogoevNotes, maintenanceNote: $maintenanceNote, maintenanceStatus: $maintenanceStatus)';
   }
 
   @override
@@ -594,7 +594,7 @@ class _$_ChargerSpot implements _ChargerSpot {
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
-            (identical(other.source_, source_) || other.source_ == source_) &&
+            (identical(other.source, source) || other.source == source) &&
             (identical(other.note, note) || other.note == note) &&
             const DeepCollectionEquality()
                 .equals(other._directions, _directions) &&
@@ -642,7 +642,7 @@ class _$_ChargerSpot implements _ChargerSpot {
         name,
         latitude,
         longitude,
-        source_,
+        source,
         note,
         const DeepCollectionEquality().hash(_directions),
         markerLabel,
@@ -686,7 +686,7 @@ abstract class _ChargerSpot implements ChargerSpot {
       required final String name,
       required final num latitude,
       required final num longitude,
-      required final ModelSource source_,
+      required final ModelSource source,
       final String? note,
       final List<String> directions,
       final MarkerLabel? markerLabel,
@@ -706,7 +706,7 @@ abstract class _ChargerSpot implements ChargerSpot {
       final String? parkingFee,
       final String? advanceContact,
       final List<String> gogoevNotes,
-      final List<String> maintenanceNote,
+      final List<String?> maintenanceNote,
       final MaintenanceStatus? maintenanceStatus}) = _$_ChargerSpot;
 
   factory _ChargerSpot.fromJson(Map<String, dynamic> json) =
@@ -721,7 +721,7 @@ abstract class _ChargerSpot implements ChargerSpot {
   @override
   num get longitude;
   @override
-  ModelSource get source_;
+  ModelSource get source;
   @override
   String? get note;
   @override
@@ -759,7 +759,7 @@ abstract class _ChargerSpot implements ChargerSpot {
   @override
   List<String> get gogoevNotes;
   @override
-  List<String> get maintenanceNote;
+  List<String?> get maintenanceNote;
   @override
   MaintenanceStatus? get maintenanceStatus;
   @override
