@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:flutter/material.dart';
 
 import '../constant/constant.dart';
 import '../model/charger_spots_request.dart';
@@ -19,12 +19,11 @@ class ChargerSpotsDataStore implements ChargerSpotsDataStoreInterface {
     try {
       final response = await dio.get(url, queryParameters: param.toJson());
       final responseData = charger_spot_res.Response.fromJson(response.data);
-      inspect(responseData);
       return responseData;
     } on Exception catch (e) {
       throw Exception(e.toString());
     } finally {
-      print('fetch!!!!');
+      debugPrint('fetch!!!!');
     }
   }
 }
