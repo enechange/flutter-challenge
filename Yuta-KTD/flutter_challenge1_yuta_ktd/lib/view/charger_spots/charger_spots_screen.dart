@@ -1,14 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
-import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/charger_spots_info_card.dart';
+import 'package:flutter_challenge1_yuta_ktd/datastore/charger_spots_datastore_provider.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/charger_spots_async_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../core/location/location_provider.dart';
+import 'component/card/charger_spots_info_card.dart';
+import 'component/map/charger_map.dart';
+import 'component/map/current_location_button.dart';
 
 // TODO: GoogleMapを呼び出したいフェーズに移ったら削除
 
@@ -21,7 +25,7 @@ class ChargerSpotScreen extends ConsumerStatefulWidget {
 }
 
 class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
-  final Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> controller = Completer();
   final Duration showCardDuration = const Duration(milliseconds: 400);
   Position? position;
   // カードをせり出すかどうか
@@ -29,33 +33,17 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final asyncChargerSpots = ref.watch(chargerSpotsFutureProvider);
-    // Widgetが初めてビルドされた後に呼び出す
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _moveCamera();
-    });
+    // TODO: statusでngの時にダイアログ出す
+    final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            onTap: (_) {
-              if (!showCard) return;
-              setState(() {
-                showCard = false;
-              });
-            },
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(
-                //positionが取得できない場合は初期座標を東京付近に設定する
-                position?.latitude ?? 36,
-                position?.longitude ?? 140,
-              ),
-              zoom: 16,
-            ),
-            onMapCreated: _onMapCreated,
-            myLocationButtonEnabled: false,
+          ChargerMap(
+            onTap: _onMapTap,
+            position: position,
+            controller: controller,
+
+            // onMapCreated: _onMapCreated,
           ),
           AnimatedPositioned(
             duration: showCardDuration,
@@ -64,10 +52,8 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
             child: SizedBox(
               width: 62.0,
               height: 62.0,
-              child: FloatingActionButton(
-                onPressed: () => _moveCamera(),
-                backgroundColor: textColor,
-                child: const Icon(Icons.gps_fixed),
+              child: CurrentLocationButton(
+                controller: controller,
               ),
             ),
           ),
@@ -94,9 +80,9 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
                         return ChargerSpotsInfoCard(chargerSpot: data);
                       }),
                   error: (error, _) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(error.toString())),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(content: Text(error.toString())),
+                    // );
                     return _errorLoading(const Text('通信エラーです'));
                   },
                   loading: () =>
@@ -110,27 +96,11 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
     );
   }
 
-  // 位置データを取得し、カメラを移動させる
-  Future<void> _moveCamera() async {
-    position = await ref.refresh(locationProvider.future);
-    final mapController = await _controller.future;
-    final latitude = position?.latitude;
-    final longitude = position?.longitude;
-    if (latitude == null || longitude == null) {
-      return;
-    }
-    await mapController.moveCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(latitude, longitude),
-          zoom: 13,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    _controller.complete(controller);
+  void _onMapTap() {
+    if (!showCard) return;
+    setState(() {
+      showCard = false;
+    });
   }
 
   Widget _errorLoading(Widget child) {
