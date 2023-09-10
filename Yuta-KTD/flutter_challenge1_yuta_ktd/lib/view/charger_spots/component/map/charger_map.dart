@@ -1,17 +1,14 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge1_yuta_ktd/provider/page_controller_provider.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/map_marker_async_provider.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/show_card_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/location/location_provider.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
-import '../../../../provider/icon_card_connect_provider.dart';
 import '../../../../provider/map_controller_completer_provider.dart';
-import 'marker_manager.dart';
 
 /// GoogleMap
 class ChargerMap extends ConsumerStatefulWidget {
@@ -24,18 +21,10 @@ class ChargerMap extends ConsumerStatefulWidget {
 class _ChargerMapState extends ConsumerState<ChargerMap> {
   @override
   Widget build(BuildContext context) {
-    final chargerSpotsProvider = ref.watch(chargerSpotsAsyncProvider);
-    final pageController = ref.watch(pageControllerProvider);
-    final iconCardConnection = ref.watch(iconCardConnectProvider);
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
     final showCardNotifire = ref.watch(showCardProvider.notifier);
-    final markerManager = MarkerManager(
-      pageController: pageController,
-      iconCardConnection: iconCardConnection,
-      mapControllerCompleter: mapControllerCompleter,
-      showCardNotifire: showCardNotifire,
-    );
+    final markersAsyncValue = ref.watch(mapMarkerAsyncProvider);
 
     // TODO: Zoomについては実機検証必要
     final locationAsyncValue = ref.watch(locationProvider);
@@ -55,11 +44,9 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
               _onMapCreated(mapController, mapControllerCompleter),
           myLocationButtonEnabled: false,
           onTap: (_) => showCardNotifire.state = false,
-          markers: chargerSpotsProvider.when(
+          markers: markersAsyncValue.when(
             data: (res) {
-              return markerManager.createMarkers(
-                chargerSpots: res.chargerSpots,
-              );
+              return res;
             },
             error: (error, _) {
               // ScaffoldMessenger.of(context).showSnackBar(
@@ -87,7 +74,6 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     // もっとロバストな方法を考える
     await Future.delayed(const Duration(seconds: 1));
     final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
-    inspect(visibleRegion);
     final LatLng southwest = visibleRegion.southwest;
     final LatLng northeast = visibleRegion.northeast;
     await chargerSpotsNotifire.serchChargerSpots(
