@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
 
+import '../../../../constant/const_text.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
 import 'charger_spots_info_card.dart';
 
@@ -23,6 +24,20 @@ class CardList extends ConsumerWidget {
     final showCardNotifire = ref.watch(showCardProvider.notifier);
 
     return asyncChargerSpots.when(
+      skipLoadingOnRefresh: false, // 再検索時にもローディングインジケーターを表示する
+      loading: () => _errorLoading(
+        const CircularProgressIndicator(),
+      ),
+      error: (error, _) {
+        final message =
+            '$fetchSpotsError\n下記エラーを開発者にご連絡ください\n${error.toString()}';
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('fetchSpotsError')),
+          );
+        });
+        return _errorLoading(Card(child: Text(message)));
+      },
       data: (res) => PageView.builder(
         controller: controller,
         itemCount: res.chargerSpots.length,
@@ -36,15 +51,6 @@ class CardList extends ConsumerWidget {
         onPageChanged: (value) async {
           await _onPageChanged(value, res, mapControllerCompleter);
         },
-      ),
-      error: (error, _) {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(content: Text(error.toString())),
-        // );
-        return _errorLoading(const Text('通信エラーです'));
-      },
-      loading: () => _errorLoading(
-        const CircularProgressIndicator(),
       ),
     );
   }
@@ -74,9 +80,12 @@ class CardList extends ConsumerWidget {
   }
 
   Widget _errorLoading(Widget child) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: child,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: child,
+      ),
     );
   }
 }
