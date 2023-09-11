@@ -4,7 +4,7 @@ import 'package:openapi/model/charger_device.dart';
 import 'package:openapi/model/display_status.dart';
 
 import '../../../../../constant/decolation_style.dart';
-import 'card_text_info_title.dart';
+import '../card_text.dart';
 
 /// 使用可能な充電スポットと充電スポットの総数を表示
 class AvailableCharger extends StatelessWidget {
@@ -21,8 +21,10 @@ class AvailableCharger extends StatelessWidget {
     return Row(
       children: [
         Assets.power.image(width: 16.0, height: 16.0),
-        const CardTextInfoTitle(
-          title: '利用可能',
+        Container(
+          width: 78.0,
+          padding: const EdgeInsets.only(right: 10.0),
+          child: const CardText('利用可能'),
         ),
         RichText(
           strutStyle: const StrutStyle(height: 1.35, fontSize: 14.0),

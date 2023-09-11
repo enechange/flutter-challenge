@@ -24,14 +24,10 @@ class BusinessHours extends StatelessWidget {
 
     // 今日の曜日に関する営業時間情報がない場合
     if (todayServiceTimes.isEmpty) {
-      return Row(
-        children: [
-          Assets.watchLator.image(width: 16.0, height: 16.0),
-          const CardTextInfoTitle(
-            title: '営業時間外',
-            color: unavailableColor,
-          ),
-        ],
+      return CardTextInfoTitle(
+        title: '営業時間外',
+        color: unavailableColor,
+        image: Assets.watchLator.image(width: 16.0, height: 16.0),
       );
     }
 
@@ -55,11 +51,11 @@ class BusinessHours extends StatelessWidget {
       height: 19.0,
       child: Row(
         children: [
-          Assets.watchLator.image(width: 16.0, height: 16.0),
           CardTextInfoTitle(
             // unKnownの場合も営業時間外とする
             title: available ? '営業中' : '営業時間外',
             color: available ? availableColor : unavailableColor,
+            image: Assets.watchLator.image(width: 16.0, height: 16.0),
           ),
           Expanded(
             child: ListView.builder(

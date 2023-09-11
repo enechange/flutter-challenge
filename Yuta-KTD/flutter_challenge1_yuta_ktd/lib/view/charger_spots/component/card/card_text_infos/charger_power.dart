@@ -3,7 +3,6 @@ import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
 import 'package:openapi/model/charger_device.dart';
 
 import '../card_text.dart';
-import 'card_text_info_title.dart';
 
 /// 充電出力一覧
 class ChargerPower extends StatelessWidget {
@@ -25,8 +24,10 @@ class ChargerPower extends StatelessWidget {
       child: Row(
         children: [
           Assets.bolt.image(width: 16.0, height: 16.0),
-          const CardTextInfoTitle(
-            title: '充電出力',
+          Container(
+            width: 78.0,
+            padding: const EdgeInsets.only(right: 10.0),
+            child: const CardText('充電出力'),
           ),
           Expanded(
             child: ListView.builder(
