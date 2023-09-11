@@ -32,6 +32,7 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
             longitude: chargerSpot.longitude,
             chargerSpotServiceTimes: chargerSpot.chargerSpotServiceTimes,
             chargerDevices: chargerSpot.chargerDevices,
+            nowAvailable: chargerSpot.nowAvailable,
           ),
         ],
       ),

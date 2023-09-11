@@ -13,9 +13,8 @@ class CardTextInfo extends StatelessWidget {
   final num latitude;
   final num longitude;
   final List<ChargerSpotServiceTime> chargerSpotServiceTimes;
-  // NOTE: 配列の要素数を台数とする
-  // DisplayStatusがavailableのものが利用可能数になる
   final List<ChargerDevice> chargerDevices;
+  final NowAvailable? nowAvailable;
 
   const CardTextInfo({
     super.key,
@@ -24,6 +23,7 @@ class CardTextInfo extends StatelessWidget {
     required this.longitude,
     required this.chargerSpotServiceTimes,
     required this.chargerDevices,
+    this.nowAvailable,
   });
 
   @override
@@ -39,7 +39,10 @@ class CardTextInfo extends StatelessWidget {
           heightBox12,
           ChargerPower(chargerDevices),
           heightBox12,
-          BusinessHours(chargerSpotServiceTimes),
+          BusinessHours(
+            chargerSpotServiceTimes,
+            nowAvailable,
+          ),
           heightBox12,
           RegularHoliday(chargerSpotServiceTimes),
           heightBox12,
