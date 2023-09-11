@@ -22,9 +22,9 @@ class RegularHoliday extends StatelessWidget {
       height: 19.0,
       child: Row(
         children: [
-          CardTextInfoTitle(
+          Assets.today.image(width: 16.0, height: 16.0),
+          const CardTextInfoTitle(
             title: '定休日',
-            image: Assets.today.image(width: 16.0, height: 16.0),
           ),
           regularHoliday.isEmpty
               ? const CardText('-')
