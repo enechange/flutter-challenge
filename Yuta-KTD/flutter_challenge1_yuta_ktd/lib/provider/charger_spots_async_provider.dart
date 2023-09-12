@@ -7,12 +7,14 @@ import 'package:openapi/model/response.dart' as charger_spot_res;
 import 'package:openapi/model/status.dart';
 
 import '../model/charger_spots_request.dart';
+import 'page_controller_provider.dart';
 
 class ChargerSpotsAsyncNotifire
     extends AutoDisposeAsyncNotifier<charger_spot_res.Response> {
+  // TODO: 初期表示が取得件数0件になるので修正必要
+  // 位置情報を取得してからbuildするか、Loadingを返すか
   @override
   FutureOr<charger_spot_res.Response> build() {
-    // FIXME: 初期値設定よくわからん
     return const charger_spot_res.Response(status: Status.ok);
   }
 
@@ -41,6 +43,8 @@ class ChargerSpotsAsyncNotifire
     state = await AsyncValue.guard(() async {
       return await repository.fetchChargerSpots(reqestParam);
     });
+    final pageViewController = ref.read(pageControllerProvider);
+    pageViewController.initialPage;
   }
 }
 
