@@ -10,12 +10,17 @@ Framework • revision f468f3366c (9 weeks ago) • 2023-07-12 15:19:05 -0700
 Engine • revision cdbeda788a
 Tools • Dart 3.0.6 • DevTools 2.23.1
 ```
-
+本プロジェクトでは、本PJではFlutterなどのバージョン管理に[asdf](https://asdf-vm.com/)を使用しています。
+もしasdfを使用してしてFlutterインストールを行いたい場合は下記の記事が参考になります。
+[asdfでFlutter SDKのバージョンをアプリ毎に管理する](https://zenn.dev/altiveinc/articles/asdf-flutter#%E6%96%B0%E3%81%97%E3%81%8F%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%9F%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB-.tool-versions-%E3%81%8C%E3%81%82%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AB%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8)
 ## Getting Started
 
-前提: GoogleMapAPIKeyの取得とAndroid/iOS向けのAPIの有効化([手順参考](https://pub.dev/packages/google_maps_flutter#getting-started:~:text=Enable%20Google%20Map%20SDK%20for%20each%20platform.))
+### 前提
+- GoogleMapAPIKeyの取得とAndroid/iOS向けのAPIの有効化([手順参考](https://pub.dev/packages/google_maps_flutter#getting-started:~:text=Enable%20Google%20Map%20SDK%20for%20each%20platform.))
+- [バージョン情報](#バージョン情報)記載のFlutterで環境構築が完了していること
 
-1. このディレクトリで`.env`ファイルを作成してください
+### 手順
+1. このディレクトリ(`flutter_challenge_yuta_katada`配下)で`.env`ファイルを作成してください
 2. `.env`ファイルの中は以下のように記述してください
 ```
 MAP_API_KEY=$GoogleMapのAPIKey
@@ -23,14 +28,6 @@ EVENE_API_KEY=$EV充電エネチェンジAPIのAPIKey
 ```
 (`.env`ファイルをKotlin/Swiftからも読み込みたいため、[flutter_config](https://pub.dev/packages/flutter_config)を使用しています。)
 3. `flutter run`実行
-
-### 画像取り込み
-画像取り込み時にタイポや存在しないファイルへの参照を防ぐために、[FlutterGen](https://pub.dev/packages/flutter_gen_runner)を導入しました。
-下記手順を実行することで`flutter_challenge1_yuta_ktd/lib/gen/assets.gen.dart`が生成されます。
-1. （まだ一度もプロジェクト実行していない場合は）`flutter pub get`を実行
-2. `flutter pub run build_runner build --delete-conflicting-outputs`を実行
-これによって、`Assets.$画像名.image()`のような形式で画像取得が可能です。
-他のファイル取り込みも可能です。詳しい使用方法は[作者のMedium](https://wasabeef.medium.com/fluttergen-25149caea94f)を確認してください。
 
 ## other
 
@@ -100,3 +97,11 @@ open_api
 #### その他
 - `assets`: アプリ内で使用する画像などを保管する。使用方法は[画像取り込み](#画像取り込み)を参照ください
 - `.tool-versions`: 本PJではFlutterなどのバージョン管理に[asdf](https://asdf-vm.com/)を使用するので、作成しました。
+
+### 画像取り込み
+画像取り込み時にタイポや存在しないファイルへの参照を防ぐために、[FlutterGen](https://pub.dev/packages/flutter_gen_runner)を導入しました。
+下記手順を実行することで`flutter_challenge1_yuta_ktd/lib/gen/assets.gen.dart`が生成されます。
+1. （まだ一度もプロジェクト実行していない場合は）`flutter pub get`を実行
+2. `flutter pub run build_runner build --delete-conflicting-outputs`を実行
+これによって、`Assets.$画像名.image()`のような形式で画像取得が可能です。
+他のファイル取り込みも可能です。詳しい使用方法は[作者のMedium](https://wasabeef.medium.com/fluttergen-25149caea94f)を確認してください。
