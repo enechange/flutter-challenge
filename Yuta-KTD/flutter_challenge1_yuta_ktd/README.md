@@ -70,7 +70,7 @@ lib
 - gen: FlutterGenで生成されたディレクトリ
 - datasource: API接続部分、APIごとに作成されるイメージ
 - model: `open_api`ディレクトリで自動生成しなかったモデルクラス
-- provider: いわゆるViewModelです。Viewで使用しやすいように各種Provider/Notifireを定義しています
+- provider: いわゆるViewModelです。Viewで使用しやすいように各種Provider/Notifierを定義しています
 - repository: DataSourceへのアクセスを抽象化するためのもの、ビジネスロジックとデータ操作を分離することを目的とする
 - view: 画面を描画する処理、Providerで定義したものをwatch/read/listenする。画面ごとにディレクトリ分けるイメージ
 - charger_spots
