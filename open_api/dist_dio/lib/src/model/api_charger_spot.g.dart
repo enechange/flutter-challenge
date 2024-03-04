@@ -328,7 +328,7 @@ class _$APIChargerSpot extends APIChargerSpot {
   @override
   final BuiltList<String>? gogoevNotes;
   @override
-  final BuiltList<String>? maintenanceNote;
+  final BuiltList<String?>? maintenanceNote;
   @override
   final APIChargerSpotMaintenanceStatusEnum? maintenanceStatus;
 
@@ -604,10 +604,10 @@ class APIChargerSpotBuilder
   set gogoevNotes(ListBuilder<String>? gogoevNotes) =>
       _$this._gogoevNotes = gogoevNotes;
 
-  ListBuilder<String>? _maintenanceNote;
-  ListBuilder<String> get maintenanceNote =>
-      _$this._maintenanceNote ??= new ListBuilder<String>();
-  set maintenanceNote(ListBuilder<String>? maintenanceNote) =>
+  ListBuilder<String?>? _maintenanceNote;
+  ListBuilder<String?> get maintenanceNote =>
+      _$this._maintenanceNote ??= new ListBuilder<String?>();
+  set maintenanceNote(ListBuilder<String?>? maintenanceNote) =>
       _$this._maintenanceNote = maintenanceNote;
 
   APIChargerSpotMaintenanceStatusEnum? _maintenanceStatus;

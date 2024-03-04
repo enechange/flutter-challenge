@@ -136,7 +136,7 @@ abstract class APIChargerSpot implements Built<APIChargerSpot, APIChargerSpotBui
 
   /// 休止情報に関する備考
   @BuiltValueField(wireName: r'maintenance_note')
-  BuiltList<String>? get maintenanceNote;
+  BuiltList<String?>? get maintenanceNote;
 
   /// メンテナンス状態
   @BuiltValueField(wireName: r'maintenance_status')
@@ -314,7 +314,7 @@ class _$APIChargerSpotSerializer implements PrimitiveSerializer<APIChargerSpot> 
       yield r'maintenance_note';
       yield serializers.serialize(
         object.maintenanceNote,
-        specifiedType: const FullType(BuiltList, [FullType(String)]),
+        specifiedType: const FullType(BuiltList, [FullType.nullable(String)]),
       );
     }
     if (object.maintenanceStatus != null) {
@@ -511,8 +511,8 @@ class _$APIChargerSpotSerializer implements PrimitiveSerializer<APIChargerSpot> 
         case r'maintenance_note':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+            specifiedType: const FullType(BuiltList, [FullType.nullable(String)]),
+          ) as BuiltList<String?>;
           result.maintenanceNote.replace(valueDes);
           break;
         case r'maintenance_status':

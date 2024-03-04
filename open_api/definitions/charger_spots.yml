@@ -277,6 +277,7 @@ components:
           description: 休止情報に関する備考
           items:
             type: string
+            nullable: true
             example: '2023/05/15 11:30に復旧しご利用いただけるようになりました。'
         maintenance_status:
           type: string

@@ -105,7 +105,7 @@ class APIChargerSpot {
   List<String> gogoevNotes;
 
   /// 休止情報に関する備考
-  List<String> maintenanceNote;
+  List<String?> maintenanceNote;
 
   /// メンテナンス状態
   APIChargerSpotMaintenanceStatusEnum? maintenanceStatus;
@@ -283,7 +283,7 @@ class APIChargerSpot {
             ? (json[r'gogoev_notes'] as Iterable).cast<String>().toList(growable: false)
             : const [],
         maintenanceNote: json[r'maintenance_note'] is Iterable
-            ? (json[r'maintenance_note'] as Iterable).cast<String>().toList(growable: false)
+            ? (json[r'maintenance_note'] as Iterable).cast<String?>().toList(growable: false)
             : const [],
         maintenanceStatus: APIChargerSpotMaintenanceStatusEnum.fromJson(json[r'maintenance_status']),
       );
