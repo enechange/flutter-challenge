@@ -2,9 +2,6 @@
 
 HTTPリクエストのクライアントとして、[http](https://pub.dev/packages/http/versions) / [dio](https://pub.dev/packages/dio) を用意しました
 `open_api` ディレクトリ配下は以下のような構成になっています。
-- definitions: OpenAPIの定義ファイルが配置されています。
-- dist_dio: dio用のクライアント、モデルが配置されています
-- dist_http: http用のクライアント、モデルが配置されています 
 ```
 open_api
 ├── definitions
@@ -25,6 +22,9 @@ open_api
     │   └── model
     └── test
 ```
+- definitions: OpenAPIの定義ファイルが配置されています。
+- dist_dio: dio用のクライアント、モデルが配置されています
+- dist_http: http用のクライアント、モデルが配置されています 
 
 ## 導入方法
 自動生成コードはパッケージ扱いなので、 `pubspec.yaml` でインポートしてください。
