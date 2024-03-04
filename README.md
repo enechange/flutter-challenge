@@ -25,11 +25,19 @@ Flutterで充電スポットマップ画面を作成してください。
 - マーカーにはそのスポットの充電器の数を表示します
 - 画面下部には各充電スポットの名称や写真、営業時間などが記載されたカードをカルーセル表示してください
 - 画面デザインやその他の細かい仕様については [Figma](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/?node-id=1414-77) をご覧ください（Figmaのアカウントを作成すると細かいところまで閲覧できるようになります）。
+    - Figma内部にAPIで取得した値をどのように使うかについて記載しました。ご活用ください。
 
-
+### 使用パッケージについて
+実装の際には以下パッケージを使用してください。
+バージョンの指定はございません。
+- [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
+- [geolocator](https://pub.dev/packages/geolocator)
 
 ### API
-充電スポットの情報を取得するには次のAPIをご利用ください。
 
-- [API仕様書](https://stg.evene.jp/apidocs/charger_spots#/charger_spots) をご覧ください。
+- 充電スポットの情報を取得するには、[API仕様書](https://stg.evene.jp/apidocs/charger_spots#/charger_spots) のAPIを使用してください。
 - APIに必要な認証トークン `X-EVENE-NATIVE-API-TOKEN` は別途お伝えいたします。
+- 仕様書 から [openapi-generator](https://openapi-generator.tech/) を使用して、 dio/http パッケージを使用してAPI実行できるようになっています。ぜひ活用ください。
+  - [使用方法](./docs/guide_api_sdk.md)
+  - もちろんカスタマイズもご自由に実施ください。使用しなくても問題ございません。
+
