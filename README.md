@@ -21,11 +21,9 @@ Flutterで充電スポットマップ画面を作成してください。
 仕様や実装について不明な点があれば適宜ご相談ください。
 
 また、このChallengeはプログラムの完成度を求めるものではなく、挑戦いただく方のスキルレベルをベースに、以下の項目などを総合的に見させて頂く場として作成しております。
-- どのくらい時間を掛けられてどこまで実装できたか
 - コードの品質
 - 実装に関する説明
 - 質疑応答
-
 
 ### 画面仕様
 - マップ上の充電スポットのある場所にマーカーを表示してください
@@ -33,7 +31,7 @@ Flutterで充電スポットマップ画面を作成してください。
 - 画面下部には各充電スポットの名称や写真、営業時間などが記載されたカードをカルーセル表示してください
 - 画面デザインやその他の細かい仕様については [Figma](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/?node-id=1414-77) をご覧ください（Figmaのアカウントを作成すると細かいところまで閲覧できるようになります）。
 - Figma内で(Option)と記載させていただいた仕様については、余力があったらトライしてください
-- 課題の優先度は、高い順に以下の順番になります。確保できる時間に応じて実施する量を各自調整してください。
+- 課題の優先度は、高い順に以下の順番になります。確保できる時間に応じて実施する量を適宜調整してください。
 1. [マップ/初期表示](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/ENECHANGE-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8?type=design&node-id=1414-78&mode=design&t=HALw18VIzoL2un47-4)
 1. [マップ/スポットにフォーカス](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/ENECHANGE-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8?type=design&node-id=1417-511&mode=design&t=HALw18VIzoL2un47-4)
 1. [マップ/エリアを移動](https://www.figma.com/file/q4i9uo1n4poIbO7iGPbqQH/ENECHANGE-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8?type=design&node-id=1414-319&mode=design&t=HALw18VIzoL2un47-4)
