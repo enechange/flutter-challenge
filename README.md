@@ -40,6 +40,8 @@ Flutterで充電スポットマップ画面を作成してください。
 実装の際に、以下パッケージは必ず使用してください。
 バージョンの指定はございません。
 - [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
+  - 使用にはGoogleMapのAPIキーが必要です。自身でキー作成をお願いします。
+  - **セキュリティの観点からキーはコミットしないようご注意ください**
 - [geolocator](https://pub.dev/packages/geolocator)
 
 ### API
