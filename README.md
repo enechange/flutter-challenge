@@ -46,6 +46,7 @@ Flutterで充電スポットマップ画面を作成してください。
 
 - 充電スポットの情報を取得するには、[API仕様書](https://stg.evene.jp/apidocs/charger_spots#/charger_spots) のAPIを使用してください。
 - APIに必要な認証トークン `X-EVENE-NATIVE-API-TOKEN` は別途お伝えいたします。
+    - **ただし、セキュリティの観点からキーはコミットしないようお願いします。**
 - 仕様書 から [openapi-generator](https://openapi-generator.tech/) を使用して、 dio/http パッケージを使用してAPI実行できるようになっています。ぜひ活用ください。
     - [使用方法](./docs/guide_api_sdk.md)   
     - もちろんカスタマイズもご自由に実施ください。使用しなくても問題ございません。
