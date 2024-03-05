@@ -1,6 +1,6 @@
 # OpenAPIから生成したモデル、クライアントの活用方法
 
-HTTPリクエストのクライアントとして、[http](https://pub.dev/packages/http/versions) / [dio](https://pub.dev/packages/dio) を用意しました
+HTTPリクエストのクライアントとして、[dio](https://pub.dev/packages/dio) / [http](https://pub.dev/packages/http/versions) を用意しました
 `open_api` ディレクトリ配下は以下のような構成になっています。
 ```
 open_api
@@ -31,13 +31,6 @@ open_api
 必要に応じて `open_api` ディレクトリを移動させてください。
 インポート例は以下の通りです。この例は `pubspec.yaml` と `open_api` が同じ階層にある想定です。
 
-http
-```yaml
-dependencies:
-  openapi:
-    path: ./open_api/dist_http
-```
-
 dio
 ```yaml
 dependencies:
@@ -46,16 +39,23 @@ dependencies:
     path: ./openapi
 ```
 
+http
+```yaml
+dependencies:
+  openapi:
+    path: ./open_api/dist_http
+```
+
 ## リクエスト時の使用方法
 ※ あくまでも使用方法の一例です。
 
-http
+dio
 ```Dart
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 ・
 ・
 ・
-    final APIResponse? result = await ChargerSpotsApi(${ApiClientのインスタンス}).chargerSpots(
+    final APIResponse? result = await ChargerSpotsApi(${Dioのインスタンス}, standardSerializers).chargerSpots(
       ${連携された認証トークン},
       swLat: '35.683331703634124',
       swLng: '139.76968669891357',
@@ -68,13 +68,13 @@ import 'package:openapi/api.dart';
 ・
 ```
 
-dio
+http
 ```Dart
-import 'package:openapi/openapi.dart';
+import 'package:openapi/api.dart';
 ・
 ・
 ・
-    final APIResponse? result = await ChargerSpotsApi(${Dioのインスタンス}, standardSerializers).chargerSpots(
+    final APIResponse? result = await ChargerSpotsApi(${ApiClientのインスタンス}).chargerSpots(
       ${連携された認証トークン},
       swLat: '35.683331703634124',
       swLng: '139.76968669891357',
