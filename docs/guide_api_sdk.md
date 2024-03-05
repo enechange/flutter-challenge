@@ -26,6 +26,19 @@ open_api
 - dist_dio: dio用のクライアント、モデルが配置されています
 - dist_http: http用のクライアント、モデルが配置されています 
 
+## 検証環境
+以下の環境で動作することを検証しました。
+課題の環境を指定するものではございません。
+```
+$ flutter --version
+Flutter 3.16.9 • channel stable •
+https://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:x-oauth-basic@github.com/flutte
+r/flutter.git
+Framework • revision 41456452f2 (6 weeks ago) • 2024-01-25 10:06:23 -0800
+Engine • revision f40e976bed
+Tools • Dart 3.2.6 • DevTools 2.28.5
+```
+
 ## 導入方法
 自動生成コードはパッケージ扱いなので、 `pubspec.yaml` でインポートしてください。
 必要に応じて `open_api` ディレクトリを移動させてください。
