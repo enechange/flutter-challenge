@@ -40,6 +40,9 @@ dependencies:
   go_router_builder: ^2.4.1
   geolocator: ^11.0.0
   dio: ^5.4.1
+  built_collection: ^5.1.1
+  openapi:
+    path: ./vendor/open_api/dist_http
 
 dev_dependencies:
   flutter_test:
