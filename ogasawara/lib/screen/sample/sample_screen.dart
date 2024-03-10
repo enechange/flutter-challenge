@@ -14,9 +14,11 @@ class SampleScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // const IconMaker(chargerCount: 16),
           ChargerSpotCard(
-            thumbnailUrl:
-                "https://www.min-inuzukan.com/data/dogKind/pomeranian/main_pomeranian_d01f4_detail.jpg",
+            thumbnailUrls: const [
+              "https://www.min-inuzukan.com/data/dogKind/pomeranian/main_pomeranian_d01f4_detail.jpg"
+            ],
             name: "ポメラニアンポメラニアンポメラニアンポメラニアンポメラニアン",
             chargerCount: 16,
             output: "4.8",

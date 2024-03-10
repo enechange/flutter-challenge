@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/api.dart';
 
 class ChargerSpotCard extends StatelessWidget {
-  final String thumbnailUrl;
+  final List<String> thumbnailUrls;
   final String name;
   final num chargerCount;
   final String output;
@@ -13,7 +13,7 @@ class ChargerSpotCard extends StatelessWidget {
 
   const ChargerSpotCard(
       {super.key,
-      required this.thumbnailUrl,
+      required this.thumbnailUrls,
       required this.name,
       required this.chargerCount,
       required this.output,
@@ -37,14 +37,12 @@ class ChargerSpotCard extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 5 / 1,
       child: CachedNetworkImage(
-          imageUrl: thumbnailUrl,
-          fit: BoxFit.cover,
-          placeholder: (context, url) {
-            return SvgPicture.asset('assets/icons/charger_spot_no_image.svg');
-          },
-          errorWidget: (context, url, error) {
-            return SvgPicture.asset('assets/icons/charger_spot_no_image.svg');
-          }),
+        imageUrl: thumbnailUrls.first, // TODO: デザイン上だと1枚
+        fit: BoxFit.cover,
+        errorWidget: (context, url, error) {
+          return SvgPicture.asset('assets/icons/charger_spot_no_image.svg');
+        },
+      ),
     );
   }
 
@@ -60,7 +58,7 @@ class ChargerSpotCard extends StatelessWidget {
         children: [
           Text(
             name,
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: columnSpace),
           Row(
