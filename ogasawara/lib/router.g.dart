@@ -15,8 +15,8 @@ RouteBase get $sampleRouteData => GoRouteData.$route(
       factory: $SampleRouteDataExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'home',
-          factory: $HomeRouteDataExtension._fromState,
+          path: 'charger_sport',
+          factory: $ChargerSpotRouteDataExtension._fromState,
         ),
       ],
     );
@@ -39,11 +39,12 @@ extension $SampleRouteDataExtension on SampleRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $HomeRouteDataExtension on HomeRouteData {
-  static HomeRouteData _fromState(GoRouterState state) => const HomeRouteData();
+extension $ChargerSpotRouteDataExtension on ChargerSpotRouteData {
+  static ChargerSpotRouteData _fromState(GoRouterState state) =>
+      const ChargerSpotRouteData();
 
   String get location => GoRouteData.$location(
-        '/sample/home',
+        '/sample/charger_sport',
       );
 
   void go(BuildContext context) => context.go(location);
