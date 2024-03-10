@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 
@@ -10,10 +13,34 @@ class ChargerSpotScreen extends StatefulWidget {
 }
 
 class ChargerSpotScreenState extends State<ChargerSpotScreen> {
+  Position? currentPosition;
   late GoogleMapController _mapController;
+  late StreamSubscription<Position> positionStream;
   final PageController _pageController = PageController();
   final LatLng _center = const LatLng(45.521563, -122.677433);
   final chargerSpots = <APIChargerSpot>[];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<CameraPosition> _initCurrentLocation() async {
+    if (!await Geolocator.isLocationServiceEnabled()) {
+      return const CameraPosition(target: LatLng(0, 0), zoom: 14);
+    }
+
+    if (await Geolocator.checkPermission() == LocationPermission.denied &&
+        await Geolocator.requestPermission() == LocationPermission.denied) {
+      return const CameraPosition(target: LatLng(0, 0), zoom: 14);
+    }
+
+    return Geolocator.getCurrentPosition()
+        .then((value) => CameraPosition(
+            target: LatLng(value.latitude, value.longitude), zoom: 14))
+        .onError((error, stackTrace) =>
+            const CameraPosition(target: LatLng(0, 0), zoom: 14));
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
@@ -23,24 +50,32 @@ class ChargerSpotScreenState extends State<ChargerSpotScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
-        ),
-        body: Column(
-          children: [_buildGoogleMap(), _buildChargeSpotSection()],
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            _buildGoogleMap(), /*_buildChargeSpotSection()*/
+          ],
         ),
       ),
     );
   }
 
   Widget _buildGoogleMap() {
-    return GoogleMap(
-      onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(
-        target: _center,
-        zoom: 11.0,
-      ),
+    return FutureBuilder<CameraPosition>(
+      future: _initCurrentLocation(),
+      builder:
+          (BuildContext context, AsyncSnapshot<CameraPosition> cameraPosition) {
+        debugPrint("Camera position: $cameraPosition");
+
+        if (!cameraPosition.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return GoogleMap(
+              onMapCreated: _onMapCreated,
+              myLocationEnabled: true,
+              initialCameraPosition: cameraPosition.data!);
+        }
+      },
     );
   }
 
