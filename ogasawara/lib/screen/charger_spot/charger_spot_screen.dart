@@ -45,23 +45,6 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
     });
   }
 
-  Future<CameraPosition> _initCurrentLocation() async {
-    if (!await Geolocator.isLocationServiceEnabled()) {
-      return const CameraPosition(target: LatLng(0, 0), zoom: 14);
-    }
-
-    if (await Geolocator.checkPermission() == LocationPermission.denied &&
-        await Geolocator.requestPermission() == LocationPermission.denied) {
-      return const CameraPosition(target: LatLng(0, 0), zoom: 14);
-    }
-
-    return Geolocator.getCurrentPosition()
-        .then((value) => CameraPosition(
-            target: LatLng(value.latitude, value.longitude), zoom: 14))
-        .onError((error, stackTrace) =>
-            const CameraPosition(target: LatLng(0, 0), zoom: 14));
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -78,16 +61,20 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
     // 東京駅付近
     const initialCameraPosition = CameraPosition(
         target: LatLng(35.684176959761444, 139.76737847182142), zoom: 17);
+    final uisState =
+        context.select((ChargerSpotViewModel viewmodel) => viewmodel.uiState);
     final chargerSpots = context
         .select((ChargerSpotViewModel viewmodel) => viewmodel.chargerSpots);
 
-    return FutureBuilder<CameraPosition>(
-      future: _initCurrentLocation(),
-      builder: (context, snapshot) {
-        // if (!snapshot.hasData) {
-        //   return const Center(child: CircularProgressIndicator());
-        // }
-
+    switch (uisState) {
+      case Idle():
+        return const SizedBox();
+      case Initializing():
+        return const Center(child: CircularProgressIndicator());
+      case Initialized():
+      case Loading():
+      case Success():
+      case Error():
         return GoogleMap(
           onMapCreated: (GoogleMapController controller) {
             _mapController = controller;
@@ -101,8 +88,7 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
           initialCameraPosition:
               initialCameraPosition /*snapshot.data ?? initialCameraPosition*/,
         ); // TODO: 東京駅エリアのみデータがあるようなので、テスト用に固定
-      },
-    );
+    }
   }
 
   Future<void> _onCameraIdle() async {
