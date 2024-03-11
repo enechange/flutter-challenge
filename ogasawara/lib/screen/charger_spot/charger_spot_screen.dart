@@ -41,8 +41,7 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ChargerSpotViewModel>(context, listen: false)
-          .fetchInitialCurrentLocation();
+      context.read<ChargerSpotViewModel>().fetchInitialCurrentLocation();
     });
   }
 
@@ -157,13 +156,7 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
 
   Widget _buildChargerSpotCard(APIChargerSpot chargerSpot) {
     return ChargerSpotCard(
-      thumbnailUrls: /*chargerSpot.images.map((e) => e.url).toList()*/ const [
-        ""
-      ],
-      name: chargerSpot.name,
-      chargerCount: 0,
-      output: "1234",
-      serviceTimes: chargerSpot.chargerSpotServiceTimes,
+      chargerSpot: chargerSpot,
       onPressed: () {
         debugPrint('onPressed: ${chargerSpot.name}');
       },
@@ -173,10 +166,10 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
   Future<void> _onPageChanged(
       List<APIChargerSpot> chargerSpots, int index) async {
     final selectedChargerSpot = chargerSpots[index];
-    await moveCameraToChargerSpot(selectedChargerSpot);
+    await _moveCameraToChargerSpot(selectedChargerSpot);
   }
 
-  Future<void> moveCameraToChargerSpot(
+  Future<void> _moveCameraToChargerSpot(
       APIChargerSpot selectedChargerSpot) async {
     final zoomLevel = await _mapController.getZoomLevel();
     final cameraPosition = CameraPosition(
