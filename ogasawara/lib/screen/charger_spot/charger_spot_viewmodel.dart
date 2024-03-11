@@ -7,6 +7,7 @@ import 'package:openapi/api.dart';
 class ChargerSpotViewModel extends ChangeNotifier {
   late GoogleMapController _mapController;
   final PageController _pageController = PageController();
+  bool _visibleChargerSpotCard = false;
   List<APIChargerSpot> _chargerSpots = [];
   CameraPosition? _initialCameraPosition;
   UiState _uiState = Idle();
@@ -15,6 +16,7 @@ class ChargerSpotViewModel extends ChangeNotifier {
   // Getters
   GoogleMapController get mapController => _mapController;
   PageController get pageController => _pageController;
+  bool get visibleChargerSpotCard => _visibleChargerSpotCard;
   List<APIChargerSpot> get chargerSpots => _chargerSpots;
   CameraPosition? get initialCameraPosition => _initialCameraPosition;
   UiState get uiState => _uiState;
@@ -25,6 +27,16 @@ class ChargerSpotViewModel extends ChangeNotifier {
       _uiState = newState;
       notifyListeners();
     }
+  }
+
+  void showChargerSpotCard() {
+    _visibleChargerSpotCard = true;
+    notifyListeners();
+  }
+
+  void hideChargerSpotCard() {
+    _visibleChargerSpotCard = false;
+    notifyListeners();
   }
 
   Future<void> fetchInitialCurrentLocation() async {
@@ -118,6 +130,7 @@ class ChargerSpotViewModel extends ChangeNotifier {
             duration: const Duration(milliseconds: 300),
             curve: Curves.ease,
           );
+          showChargerSpotCard();
         },
       );
     })))

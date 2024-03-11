@@ -42,11 +42,23 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final visibleChargerSpotCard = context.select(
+        (ChargerSpotViewModel viewmodel) => viewmodel.visibleChargerSpotCard);
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
           alignment: Alignment.bottomCenter,
-          children: [_buildGoogleMap(), _buildChargeSpotSection()],
+          children: [
+            _buildGoogleMap(),
+            AnimatedPositioned(
+              duration: Durations.short3,
+              left: 0,
+              right: 0,
+              bottom: visibleChargerSpotCard ? 0 : -140,
+              child: _buildChargeSpotSection(),
+            )
+          ],
         ),
       ),
     );
@@ -82,6 +94,10 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
           onCameraIdle: _onCameraIdle,
           onCameraMoveStarted: () {
             debugPrint('onCameraMoveStarted');
+          },
+          onTap: (_) {
+            debugPrint('onCameraMoveEnd');
+            context.read<ChargerSpotViewModel>().hideChargerSpotCard();
           },
           markers: markers,
           initialCameraPosition:
@@ -128,6 +144,7 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
       chargerSpot: chargerSpot,
       onPressed: () {
         debugPrint('onPressed: ${chargerSpot.name}');
+        context.read<ChargerSpotViewModel>().showChargerSpotCard();
       },
     );
   }

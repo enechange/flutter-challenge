@@ -16,13 +16,16 @@ class ChargerSpotCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildThumbnail(),
-          buildDescription(),
-        ],
+    return GestureDetector(
+      onTap: onPressed,
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildThumbnail(),
+            buildDescription(),
+          ],
+        ),
       ),
     );
   }
