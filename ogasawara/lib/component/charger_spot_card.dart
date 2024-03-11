@@ -82,7 +82,7 @@ class ChargerSpotCard extends StatelessWidget {
         Icon(icon, size: 16),
         const SizedBox(width: 2),
         SizedBox(
-          width: 60,
+          width: 70,
           child: Text(title, style: TextStyle(color: titleColor)),
         ),
         const SizedBox(width: 24),
@@ -102,7 +102,10 @@ class ChargerSpotCard extends StatelessWidget {
   Widget _buildChargeName() {
     return Text(
       chargerSpot.name,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+      style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          overflow: TextOverflow.ellipsis),
     );
   }
 

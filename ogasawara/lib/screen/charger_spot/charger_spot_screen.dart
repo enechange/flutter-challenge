@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:challenge_oga/component/charger_spot_card.dart';
 import 'package:challenge_oga/screen/charger_spot/charger_spot_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +31,6 @@ class _ChargerSpotScreen extends StatefulWidget {
 }
 
 class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
-  Position? currentPosition;
-  late GoogleMapController _mapController;
-  final PageController _pageController = PageController();
-
   @override
   void initState() {
     super.initState();
@@ -65,6 +60,8 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
         context.select((ChargerSpotViewModel viewmodel) => viewmodel.uiState);
     final chargerSpots = context
         .select((ChargerSpotViewModel viewmodel) => viewmodel.chargerSpots);
+    final markers =
+        context.select((ChargerSpotViewModel viewmodel) => viewmodel.markers);
 
     switch (uisState) {
       case Idle():
@@ -77,14 +74,16 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
       case Error():
         return GoogleMap(
           onMapCreated: (GoogleMapController controller) {
-            _mapController = controller;
+            context
+                .read<ChargerSpotViewModel>()
+                .updateGoogleMapController(controller);
           },
           myLocationEnabled: true,
           onCameraIdle: _onCameraIdle,
           onCameraMoveStarted: () {
             debugPrint('onCameraMoveStarted');
           },
-          markers: _buildMarkers(chargerSpots),
+          markers: markers,
           initialCameraPosition:
               initialCameraPosition /*snapshot.data ?? initialCameraPosition*/,
         ); // TODO: 東京駅エリアのみデータがあるようなので、テスト用に固定
@@ -93,31 +92,12 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
 
   Future<void> _onCameraIdle() async {
     debugPrint('onCameraIdle');
-    final visibleRegion = await _mapController.getVisibleRegion();
+    final visibleRegion = await context
+        .read<ChargerSpotViewModel>()
+        .mapController
+        .getVisibleRegion();
     if (!context.mounted) return;
     context.read<ChargerSpotViewModel>().fetchChargerSpots(visibleRegion);
-  }
-
-  Set<Marker> _buildMarkers(List<APIChargerSpot> chargerSpots) {
-    return chargerSpots.map((chargerSpot) {
-      return Marker(
-        markerId: MarkerId(chargerSpot.uuid.toString()),
-        position: LatLng(
-            chargerSpot.latitude.toDouble(), chargerSpot.longitude.toDouble()),
-        onTap: () {
-          final index = chargerSpots.indexOf(chargerSpot);
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.ease,
-          );
-        },
-        infoWindow: InfoWindow(
-          title: chargerSpot.name,
-          snippet: chargerSpot.address,
-        ),
-      );
-    }).toSet();
   }
 
   Widget _buildChargeSpotSection() {
@@ -130,11 +110,14 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: PageView.builder(
           itemCount: chargerSpots.length,
-          controller: _pageController,
+          controller: context.read<ChargerSpotViewModel>().pageController,
           itemBuilder: (BuildContext context, int index) {
             return _buildChargerSpotCard(chargerSpots[index]);
           },
-          onPageChanged: (int index) => _onPageChanged(chargerSpots, index),
+          onPageChanged: (int index) async {
+            final selectedChargerSpot = chargerSpots[index];
+            await _moveCameraToChargerSpot(selectedChargerSpot);
+          },
         ),
       ),
     );
@@ -149,15 +132,10 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
     );
   }
 
-  Future<void> _onPageChanged(
-      List<APIChargerSpot> chargerSpots, int index) async {
-    final selectedChargerSpot = chargerSpots[index];
-    await _moveCameraToChargerSpot(selectedChargerSpot);
-  }
-
   Future<void> _moveCameraToChargerSpot(
       APIChargerSpot selectedChargerSpot) async {
-    final zoomLevel = await _mapController.getZoomLevel();
+    final zoomLevel =
+        await context.read<ChargerSpotViewModel>().mapController.getZoomLevel();
     final cameraPosition = CameraPosition(
       target: LatLng(
         selectedChargerSpot.latitude.toDouble(),
@@ -166,7 +144,11 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
       zoom: zoomLevel,
     );
 
-    _mapController
+    if (!mounted) return;
+
+    context
+        .read<ChargerSpotViewModel>()
+        .mapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 }

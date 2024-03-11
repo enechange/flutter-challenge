@@ -1,17 +1,24 @@
+import 'package:challenge_oga/screen/charger_spot/charger_pin_image_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 
 class ChargerSpotViewModel extends ChangeNotifier {
+  late GoogleMapController _mapController;
+  final PageController _pageController = PageController();
   List<APIChargerSpot> _chargerSpots = [];
   CameraPosition? _initialCameraPosition;
   UiState _uiState = Idle();
+  Set<Marker> _markers = {};
 
   // Getters
-  UiState get uiState => _uiState;
+  GoogleMapController get mapController => _mapController;
+  PageController get pageController => _pageController;
   List<APIChargerSpot> get chargerSpots => _chargerSpots;
   CameraPosition? get initialCameraPosition => _initialCameraPosition;
+  UiState get uiState => _uiState;
+  Set<Marker> get markers => _markers;
 
   set __uiState(UiState newState) {
     if (_uiState != newState) {
@@ -53,12 +60,17 @@ class ChargerSpotViewModel extends ChangeNotifier {
     }
   }
 
+  void updateGoogleMapController(GoogleMapController controller) {
+    _mapController = controller;
+  }
+
   Future<void> fetchChargerSpots(LatLngBounds target) async {
     if (_uiState is Loading) return;
 
     try {
       debugPrint('fetchChargerSpots');
       __uiState = Loading();
+
       final result = await ChargerSpotsApi().chargerSpots(
           const String.fromEnvironment("EVENE_NATIVE_API_TOKEN"),
           swLat: target.southwest.latitude.toString(),
@@ -69,6 +81,7 @@ class ChargerSpotViewModel extends ChangeNotifier {
       switch (result?.status) {
         case APIResponseStatusEnum.ok:
           _chargerSpots = result?.chargerSpots ?? [];
+          _markers = await _createMarkers(_chargerSpots);
           __uiState = Success();
           debugPrint('chargerSpots length = ${result?.chargerSpots.length}');
           break;
@@ -80,6 +93,35 @@ class ChargerSpotViewModel extends ChangeNotifier {
     } catch (e) {
       __uiState = Error();
     }
+  }
+
+  Future<Set<Marker>> _createMarkers(List<APIChargerSpot> chargerSpots) async {
+    return (await Future.wait(chargerSpots.map((chargerSpot) async {
+      final pinImageBytes = await ChargerPinImageGenerator()
+          .generatePinImageToPNG(chargerSpot.chargerDevices.length);
+
+      final icon = pinImageBytes != null
+          ? BitmapDescriptor.fromBytes(pinImageBytes)
+          : BitmapDescriptor.defaultMarker;
+
+      return Marker(
+        markerId: MarkerId(chargerSpot.uuid.toString()),
+        position: LatLng(
+          chargerSpot.latitude.toDouble(),
+          chargerSpot.longitude.toDouble(),
+        ),
+        icon: icon,
+        onTap: () {
+          final index = chargerSpots.indexOf(chargerSpot);
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.ease,
+          );
+        },
+      );
+    })))
+        .toSet();
   }
 }
 
