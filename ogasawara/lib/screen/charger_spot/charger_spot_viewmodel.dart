@@ -7,9 +7,13 @@ import 'package:openapi/api.dart';
 class ChargerSpotViewModel extends ChangeNotifier {
   late GoogleMapController _mapController;
   final PageController _pageController = PageController();
+
   bool _visibleChargerSpotCard = false;
   List<APIChargerSpot> _chargerSpots = [];
   CameraPosition? _initialCameraPosition;
+  CameraPosition defaultCameraPosition = const CameraPosition(
+      target: LatLng(35.684176959761444, 139.76737847182142),
+      zoom: 17); // 東京駅付近
   UiState _uiState = Idle();
   Set<Marker> _markers = {};
 

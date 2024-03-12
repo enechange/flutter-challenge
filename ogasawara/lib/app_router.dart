@@ -14,7 +14,7 @@ class AppRouter {
   static void init() {
     AppRouter.instance.config = GoRouter(
       debugLogDiagnostics: false,
-      initialLocation: const SampleRouteData().location,
+      initialLocation: const ChargerSpotRouteData().location,
       routes: $appRoutes,
       errorBuilder: (context, state) =>
           const ScreenErrorView(message: "ページが見つかりません"),

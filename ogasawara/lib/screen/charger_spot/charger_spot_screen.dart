@@ -65,13 +65,11 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
   }
 
   Widget _buildGoogleMap() {
-    // 東京駅付近
-    const initialCameraPosition = CameraPosition(
-        target: LatLng(35.684176959761444, 139.76737847182142), zoom: 17);
+    final viewmodel = context.read<ChargerSpotViewModel>();
+    final initialCameraPosition =
+        viewmodel.initialCameraPosition ?? viewmodel.defaultCameraPosition;
     final uisState =
         context.select((ChargerSpotViewModel viewmodel) => viewmodel.uiState);
-    final chargerSpots = context
-        .select((ChargerSpotViewModel viewmodel) => viewmodel.chargerSpots);
     final markers =
         context.select((ChargerSpotViewModel viewmodel) => viewmodel.markers);
 
@@ -85,24 +83,22 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
       case Success():
       case Error():
         return GoogleMap(
-          onMapCreated: (GoogleMapController controller) {
-            context
-                .read<ChargerSpotViewModel>()
-                .updateGoogleMapController(controller);
-          },
-          myLocationEnabled: true,
-          onCameraIdle: _onCameraIdle,
-          onCameraMoveStarted: () {
-            debugPrint('onCameraMoveStarted');
-          },
-          onTap: (_) {
-            debugPrint('onCameraMoveEnd');
-            context.read<ChargerSpotViewModel>().hideChargerSpotCard();
-          },
-          markers: markers,
-          initialCameraPosition:
-              initialCameraPosition /*snapshot.data ?? initialCameraPosition*/,
-        ); // TODO: 東京駅エリアのみデータがあるようなので、テスト用に固定
+            onMapCreated: (GoogleMapController controller) {
+              context
+                  .read<ChargerSpotViewModel>()
+                  .updateGoogleMapController(controller);
+            },
+            myLocationEnabled: true,
+            onCameraIdle: _onCameraIdle,
+            onCameraMoveStarted: () {
+              debugPrint('onCameraMoveStarted');
+            },
+            onTap: (_) {
+              debugPrint('onCameraMoveEnd');
+              context.read<ChargerSpotViewModel>().hideChargerSpotCard();
+            },
+            markers: markers,
+            initialCameraPosition: initialCameraPosition);
     }
   }
 
