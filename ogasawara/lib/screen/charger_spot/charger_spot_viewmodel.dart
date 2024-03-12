@@ -7,24 +7,40 @@ import 'package:openapi/api.dart';
 class ChargerSpotViewModel extends ChangeNotifier {
   late GoogleMapController _mapController;
   final PageController _pageController = PageController();
+  final ChargerPinImageGenerator _chargerPinImageGenerator =
+      ChargerPinImageGenerator();
+  final ChargerSpotsApi _chargerSpotsApi;
 
   bool _visibleChargerSpotCard = false;
+
   List<APIChargerSpot> _chargerSpots = [];
+
   CameraPosition? _initialCameraPosition;
+
+  // 東京駅付近
   CameraPosition defaultCameraPosition = const CameraPosition(
-      target: LatLng(35.684176959761444, 139.76737847182142),
-      zoom: 17); // 東京駅付近
+      target: LatLng(35.684176959761444, 139.76737847182142), zoom: 17);
+
   UiState _uiState = Idle();
+
   Set<Marker> _markers = {};
 
   // Getters
   GoogleMapController get mapController => _mapController;
   PageController get pageController => _pageController;
+
   bool get visibleChargerSpotCard => _visibleChargerSpotCard;
+
   List<APIChargerSpot> get chargerSpots => _chargerSpots;
+
   CameraPosition? get initialCameraPosition => _initialCameraPosition;
+
   UiState get uiState => _uiState;
+
   Set<Marker> get markers => _markers;
+
+  ChargerSpotViewModel({ChargerSpotsApi? chargerSpotsApi})
+      : _chargerSpotsApi = chargerSpotsApi ?? ChargerSpotsApi();
 
   set __uiState(UiState newState) {
     if (_uiState != newState) {
@@ -87,7 +103,7 @@ class ChargerSpotViewModel extends ChangeNotifier {
       debugPrint('fetchChargerSpots');
       __uiState = Loading();
 
-      final result = await ChargerSpotsApi().chargerSpots(
+      final result = await _chargerSpotsApi.chargerSpots(
           const String.fromEnvironment("EVENE_NATIVE_API_TOKEN"),
           swLat: target.southwest.latitude.toString(),
           swLng: target.southwest.longitude.toString(),
@@ -113,7 +129,7 @@ class ChargerSpotViewModel extends ChangeNotifier {
 
   Future<Set<Marker>> _createMarkers(List<APIChargerSpot> chargerSpots) async {
     return (await Future.wait(chargerSpots.map((chargerSpot) async {
-      final pinImageBytes = await ChargerPinImageGenerator()
+      final pinImageBytes = await _chargerPinImageGenerator
           .generatePinImageToPNG(chargerSpot.chargerDevices.length);
 
       final icon = pinImageBytes != null
