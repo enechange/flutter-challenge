@@ -82,7 +82,11 @@ class ChargerSpotCard extends StatelessWidget {
   }) {
     return Row(
       children: [
-        Icon(icon, size: 16),
+        Icon(
+          icon,
+          size: 16,
+          color: primaryColor,
+        ),
         const SizedBox(width: 2),
         SizedBox(
           width: 70,

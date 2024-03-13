@@ -18,7 +18,7 @@ class ChargerSpotViewModel extends ChangeNotifier {
   CameraPosition? _initialCameraPosition;
 
   // 東京駅付近
-  CameraPosition defaultCameraPosition = const CameraPosition(
+  final _defaultCameraPosition = const CameraPosition(
       target: LatLng(35.684176959761444, 139.76737847182142), zoom: 17);
 
   UiState _uiState = Idle();
@@ -33,7 +33,8 @@ class ChargerSpotViewModel extends ChangeNotifier {
 
   List<APIChargerSpot> get chargerSpots => _chargerSpots;
 
-  CameraPosition? get initialCameraPosition => _initialCameraPosition;
+  CameraPosition get initialCameraPosition =>
+      _initialCameraPosition ?? _defaultCameraPosition;
 
   UiState get uiState => _uiState;
 
@@ -41,6 +42,14 @@ class ChargerSpotViewModel extends ChangeNotifier {
 
   ChargerSpotViewModel({ChargerSpotsApi? chargerSpotsApi})
       : _chargerSpotsApi = chargerSpotsApi ?? ChargerSpotsApi();
+
+  @override
+  void dispose() {
+    debugPrint('ChargerSpotViewModel dispose');
+    _mapController.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   set __uiState(UiState newState) {
     if (_uiState != newState) {

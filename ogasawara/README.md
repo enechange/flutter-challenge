@@ -43,7 +43,7 @@ APIを利用するのにTOKENが必要なため、別途入手してください
 
 
 ## 設計方針
-あとで記入
+慣れているMVVM+Providerパターンで実装。Map系の状態を画面ごとのVMで保持しているが、全体管理する場合は`lib/state`に配置。
 
 ## もしかっちり作る時間があるならばのIF
 1. Typography/Themeの適用。MaterialAppのlightTheme、darkThemeごとにコンポーネントの標準スタイルやフォントを設定。アプリ全体で表記揺れが発生しないにする。

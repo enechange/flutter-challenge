@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:challenge_oga/component/charger_spot_card.dart';
+import 'package:challenge_oga/screen/charger_spot/charger_spot_card.dart';
 import 'package:challenge_oga/screen/charger_spot/charger_spot_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -66,8 +66,6 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
 
   Widget _buildGoogleMap() {
     final viewmodel = context.read<ChargerSpotViewModel>();
-    final initialCameraPosition =
-        viewmodel.initialCameraPosition ?? viewmodel.defaultCameraPosition;
     final uisState =
         context.select((ChargerSpotViewModel viewmodel) => viewmodel.uiState);
     final markers =
@@ -94,11 +92,11 @@ class _ChargerSpotScreenState extends State<_ChargerSpotScreen> {
               debugPrint('onCameraMoveStarted');
             },
             onTap: (_) {
-              debugPrint('onCameraMoveEnd');
+              debugPrint('onTap');
               context.read<ChargerSpotViewModel>().hideChargerSpotCard();
             },
             markers: markers,
-            initialCameraPosition: initialCameraPosition);
+            initialCameraPosition: viewmodel.initialCameraPosition);
     }
   }
 
